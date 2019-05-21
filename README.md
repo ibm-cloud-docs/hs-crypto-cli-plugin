@@ -1,0 +1,1 @@
+# hs-crypto-cli-plugin

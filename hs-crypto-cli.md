@@ -43,7 +43,7 @@ To install the TKE CLI plug-in, follow these steps:
   ```
   {: codeblock}
 
-  If you are using the Beta instance of ({{site.data.keyword.hscrypto}}, run the `ibmcloud plugin install tke -v 0.0.4` to get the latest beta version of the TKE plug-in. Do not install later versions of the TKE plug-in.
+  If you are using the Beta instance of ({{site.data.keyword.hscrypto}}, run the `ibmcloud plugin install tke -v 0.0.4` command to get the latest beta version of the TKE plug-in. Do not install later versions of the TKE plug-in.
   {: important}
 
 3. Set the environment variable `CLOUDTKEFILES` on your workstation. Specify a directory where you want master key part files and signature key part files to be created and saved. Create the directory if it does not already exist.

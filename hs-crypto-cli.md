@@ -2,7 +2,7 @@
 
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-08"
+lastupdated: "2019-05-22"
 
 keywords: Trusted Key Entry plugin, TKE plugin, CLI plugin, TKE commands
 
@@ -24,12 +24,14 @@ subcollection: hs-crypto
 You can use the Trusted Key Entry (TKE) CLI plug-in to load master key registers before you use the {{site.data.keyword.hscrypto}} instance.
 {:shortdesc}
 
+## Installing the TKE CLI plug-in
+{: #install-tke-cli-plugin}
 
 To install the TKE CLI plug-in, follow these steps:
 
-1. Install the [{{site.data.keyword.Bluemix_notm}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+1. Install the [{{site.data.keyword.cloud}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
 
-  {{site.data.keyword.Bluemix_notm}} CLI requires Java SDK 1.7.0. The prefix for running commands by using the {{site.data.keyword.Bluemix_notm}} CLI is `ibmcloud`. In the terminal, you are notified when updates to the `ibmcloud` CLI is available. Be sure to keep your CLI up-to-date so that you can use all the available commands and flags.
+  {{site.data.keyword.cloud_notm}} CLI requires Java&trade; SDK 1.7.0. The prefix for running commands by using the {{site.data.keyword.cloud_notm}} CLI is `ibmcloud`. In the terminal, you are notified when updates to the `ibmcloud` CLI is available. Be sure to keep your CLI up-to-date so that you can use all the available commands and flags.
 
   To load master key registers to the {{site.data.keyword.hscrypto}} instance, you also need to install the {{site.data.keyword.keymanagementservicefull}} plug-in. For detailed steps, see [Setting up the CLI](/docs/services/hs-crypto/set-up-cli.html).
   {:tip}
@@ -39,19 +41,21 @@ To install the TKE CLI plug-in, follow these steps:
   ```
   ibmcloud plugin install tke
   ```
-  {: pre}
+  {: codeblock}
 
-  If you are using the Beta instance of ({{site.data.keyword.hscrypto}}, run the `ibmcloud plugin install tke -v 0.0.4` to get the latest beta version of the TKE plug-in. Do not install later versions of the TKE plug-in.
-  {:important}
+  If you are using the Beta instance of ({{site.data.keyword.hscrypto}}, run the `ibmcloud plugin install tke -v 0.0.4` command to get the latest beta version of the TKE plug-in. Do not install later versions of the TKE plug-in.
+  {: important}
 
-3. Set the environment variable CLOUDTKEFILES on your workstation. Specify a directory where you want master key part files and signature key part files to be created and saved. Create the directory if it does not already exist.
+3. Set the environment variable `CLOUDTKEFILES` on your workstation. Specify a directory where you want master key part files and signature key part files to be created and saved. Create the directory if it does not already exist.
 
   * On Linux or MacOS, add the following line to the `.bash_profile` file:
      ```
      export CLOUDTKEFILES=<path>
      ```
-     {: pre}
+     {: codeblock}
+     
      For example, you can specify the *path* to `/Users/tke-files`.
+     
   * On Windows, in **Control Panel**, type `environment variable` in the search box to locate the Environment Variables window. Create a CLOUDTKEFILES environment variable and set the value to the path to the key files. For example, `C:\users\tke-files`.
 
 
@@ -89,4 +93,4 @@ For more information on each command, run the following command in the TKE CLI p
 ```
 ibmcloud tke help <command_name>
 ```
-{:pre}
+{:codeblock}

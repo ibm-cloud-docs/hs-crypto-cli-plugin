@@ -4,4 +4,6 @@
 {: .toc subcollection="hs-crypto" audience="cli" href="/docs/hs-crypto-cli-plugin/hs-crypto-cli.html" path="hs-crypto-cli-plugin"}
 IBM Cloud Hyper Protect Crypto Services CLI reference
 
+    {: .navgroup id="reference"}
     hs-crypto-cli.md
+    {: .navgroup-end}

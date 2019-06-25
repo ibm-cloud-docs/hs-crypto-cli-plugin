@@ -2,7 +2,7 @@
 
 copyright:
   years: 2018, 2019
-lastupdated: "2019-05-22"
+lastupdated: "2019-06-25"
 
 keywords: Trusted Key Entry plugin, TKE plugin, CLI plugin, TKE commands
 
@@ -29,7 +29,7 @@ You can use the Trusted Key Entry (TKE) CLI plug-in to load master key registers
 
 To install the TKE CLI plug-in, follow these steps:
 
-1. Install the [{{site.data.keyword.cloud}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/docs/cli?topic=cloud-cli-ibmcloud-cli#overview).
+1. Install the [{{site.data.keyword.cloud}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started).
 
   {{site.data.keyword.cloud_notm}} CLI requires Java&trade; SDK 1.7.0. The prefix for running commands by using the {{site.data.keyword.cloud_notm}} CLI is `ibmcloud`. In the terminal, you are notified when updates to the `ibmcloud` CLI is available. Be sure to keep your CLI up-to-date so that you can use all the available commands and flags.
 
@@ -53,9 +53,9 @@ To install the TKE CLI plug-in, follow these steps:
      export CLOUDTKEFILES=<path>
      ```
      {: codeblock}
-     
+
      For example, you can specify the *path* to `/Users/tke-files`.
-     
+
   * On Windows, in **Control Panel**, type `environment variable` in the search box to locate the Environment Variables window. Create a CLOUDTKEFILES environment variable and set the value to the path to the key files. For example, `C:\users\tke-files`.
 
 

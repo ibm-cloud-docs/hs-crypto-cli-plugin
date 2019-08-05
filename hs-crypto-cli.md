@@ -2,9 +2,9 @@
 
 copyright:
   years: 2018, 2019
-lastupdated: "2019-06-25"
+lastupdated: "2019-08-05"
 
-keywords: Trusted Key Entry plugin, TKE plugin, CLI plugin, TKE commands
+keywords: Hyper Protect Crypto Services, Trusted Key Entry plugin, TKE plugin, CLI plugin, TKE commands, Cloud TKE reference
 
 subcollection: hs-crypto
 
@@ -87,6 +87,7 @@ To install the TKE CLI plug-in, follow these steps:
 |tke cryptounit-mk-commit|Commits the new master key register.|`ibmcloud tke cryptounit-mk-commit`|
 |tke cryptounit-mk-setimm| Activiates the master key registers.|`ibmcloud tke cryptounit-mk-setimm`|
 |tke cryptounit-mk-load|Loads the new master key register.|`ibmcloud tke cryptounit-mk-load`|
+{: caption="Table 1. Describes the TKE CLI plug-in commands" caption-side="top"}
 
 For more information on each command, run the following command in the TKE CLI plug-in:
 

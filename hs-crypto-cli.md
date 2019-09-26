@@ -21,7 +21,7 @@ subcollection: hs-crypto
 # Trusted Key Entry CLI plug-in reference
 {: #tke_cli_plugin}
 
-You can use the Trusted Key Entry (TKE) CLI plug-in to load master key registers before you use the {{site.data.keyword.hscrypto}} instance.
+You can use the Trusted Key Entry (TKE) CLI plug-in to load master key registers before you use the {{site.data.keyword.cloud}} {{site.data.keyword.hscrypto}} instance.
 {:shortdesc}
 
 ## Installing the TKE CLI plug-in
@@ -29,7 +29,7 @@ You can use the Trusted Key Entry (TKE) CLI plug-in to load master key registers
 
 To install the TKE CLI plug-in, follow these steps:
 
-1. Install the [{{site.data.keyword.cloud}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started).
+1. Install the [{{site.data.keyword.cloud_notm}} CLI ![External link icon](../icons/launch-glyph.svg "External link icon")](https://cloud.ibm.com/docs/cli?topic=cloud-cli-getting-started).
 
   {{site.data.keyword.cloud_notm}} CLI requires Java&trade; SDK 1.7.0. The prefix for running commands by using the {{site.data.keyword.cloud_notm}} CLI is `ibmcloud`. In the terminal, you are notified when updates to the `ibmcloud` CLI is available. Be sure to keep your CLI up-to-date so that you can use all the available commands and flags.
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2018, 2019
-lastupdated: "2019-08-05"
+lastupdated: "2019-12-23"
 
 keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
 

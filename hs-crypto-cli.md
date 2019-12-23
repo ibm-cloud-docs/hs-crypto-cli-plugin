@@ -4,7 +4,7 @@ copyright:
   years: 2018, 2019
 lastupdated: "2019-08-05"
 
-keywords: Hyper Protect Crypto Services, Trusted Key Entry plugin, TKE plugin, CLI plugin, TKE commands, Cloud TKE reference
+keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
 
 subcollection: hs-crypto
 
@@ -45,7 +45,7 @@ To install the TKE CLI plug-in, follow these steps:
 
 3. Set the environment variable `CLOUDTKEFILES` on your workstation. Specify a directory where you want master key part files and signature key part files to be created and saved. Create the directory if it does not already exist.
 
-  * On Linux or MacOS, add the following line to the `.bash_profile` file:
+  * On the Linux&trade; operating system or MacOS, add the following line to the `.bash_profile` file:
      ```
      export CLOUDTKEFILES=<path>
      ```
@@ -53,7 +53,7 @@ To install the TKE CLI plug-in, follow these steps:
 
      For example, you can specify the *path* to `/Users/tke-files`.
 
-  * On Windows, in **Control Panel**, type `environment variable` in the search box to locate the Environment Variables window. Create a CLOUDTKEFILES environment variable and set the value to the path to the key files. For example, `C:\users\tke-files`.
+  * On the Windows&trade; operating system, in **Control Panel**, type `environment variable` in the search box to locate the Environment Variables window. Create a CLOUDTKEFILES environment variable and set the value to the path to the key files. For example, `C:\users\tke-files`.
 
 
 ## TKE CLI plug-in commands

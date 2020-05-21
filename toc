@@ -1,7 +1,7 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="hs-crypto" audience="cli" href="/docs/hs-crypto-cli-plugin/hs-crypto-cli.html" path="hs-crypto-cli-plugin"}
+{: .toc subcollection="hs-crypto-cli-plugin" audience="cli" href="/docs/hs-crypto-cli-plugin/hs-crypto-cli.html" path="hs-crypto-cli-plugin"}
 IBM Cloud Hyper Protect Crypto Services CLI reference
 
     {: .navgroup id="reference"}

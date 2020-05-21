@@ -6,7 +6,7 @@ lastupdated: "2020-01-02"
 
 keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
 
-subcollection: hs-crypto
+subcollection: hs-crypto-cli-plugin
 
 ---
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2018, 2020
-lastupdated: "2020-01-02"
+lastupdated: "2020-05-22"
 
 keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
 
@@ -18,7 +18,7 @@ subcollection: hs-crypto-cli-plugin
 {:tip: .tip}
 {:important: .important}
 
-# Trusted Key Entry CLI plug-in reference
+# {{site.data.keyword.hscrypto}} Trusted Key Entry CLI
 {: #tke_cli_plugin}
 
 You can use the Trusted Key Entry (TKE) CLI plug-in to load master key registers before you use the {{site.data.keyword.cloud}} {{site.data.keyword.hscrypto}} instance.

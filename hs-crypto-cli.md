@@ -2,9 +2,9 @@
 
 copyright:
   years: 2018, 2020
-lastupdated: "2020-05-22"
+lastupdated: "2020-09-29"
 
-keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
+keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, cloud tke, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
 
 subcollection: hs-crypto-cli-plugin
 
@@ -21,10 +21,10 @@ subcollection: hs-crypto-cli-plugin
 # {{site.data.keyword.cloud_notm}} {{site.data.keyword.hscrypto}} Trusted Key Entry CLI
 {: #tke_cli_plugin}
 
-You can use the Trusted Key Entry (TKE) command-line interface (CLI) plug-in to load master key registers before you use the {{site.data.keyword.cloud}} {{site.data.keyword.hscrypto}} instance.
+You can use the {{site.data.keyword.cloud}} Trusted Key Entry (TKE) command-line interface (CLI) plug-in to load the master key before you use the {{site.data.keyword.cloud_notm}} {{site.data.keyword.hscrypto}} instance.
 {:shortdesc}
 
-## Installing the TKE CLI plug-in
+## Installing the {{site.data.keyword.cloud_notm}} TKE CLI plug-in
 {: #install-tke-cli-plugin}
 
 To install the TKE CLI plug-in, follow these steps:
@@ -57,7 +57,7 @@ To install the TKE CLI plug-in, follow these steps:
   * On the Windows&trade; operating system, in **Control Panel**, type `environment variable` in the search box to locate the Environment Variables window. Create a CLOUDTKEFILES environment variable and set the value to the path to the key files. For example, `C:\users\tke-files`.
 
 
-## TKE CLI plug-in commands
+## {{site.data.keyword.cloud_notm}} TKE CLI plug-in commands
 {: #commands_usage}
 
 | Command name | Description | Example |
@@ -71,9 +71,10 @@ To install the TKE CLI plug-in, follow these steps:
 | `tke cryptounit-exit-impr` | Exits imprint mode in the selected crypto units. (**Deprecated.** Use `cryptounit-thrhld-set` instead.) | `ibmcloud tke cryptounit-exit-impr` |
 | `tke cryptounit-mk` | Displays master key registers for the selected crypto units. | `ibmcloud tke cryptounit-mk` |
 | `tke cryptounit-mk-clrcur` | Clears the current master key register. | `ibmcloud tke cryptounit-mk-clrcur` |
-| `tke cryptounit-mk-clrnew` | Clears the new master key register. | `ibmcloud tke mks` |
+| `tke cryptounit-mk-clrnew` | Clears the new master key register. | `ibmcloud tke cryptounit-mk-clrnew` |
 | `tke cryptounit-mk-commit` | Commits the new master key register. | `ibmcloud tke cryptounit-mk-commit` |
 | `tke cryptounit-mk-load` | Loads the new master key register. | `ibmcloud tke cryptounit-mk-load` |
+| `tke cryptounit-mk-rotate` | Promotes the master key in the new master key register to the current master key register after rewrapping root keys and encryption keys in the key management keystore. | `ibmcloud tke cryptounit-mk-rotate` |
 | `tke cryptounit-mk-setimm` | Does set immediate on the master key registers. | `ibmcloud tke cryptounit-mk-setimm` |
 | `tke cryptounit-rm` | Removes crypto units from the set of crypto units to work with. | `ibmcloud tke cryptounit-rm` |
 | `tke cryptounit-thrhld-set` | Sets the signature thresholds for the selected crypto units. | `ibmcloud tke cryptounit-thrhld-set` |
@@ -96,5 +97,3 @@ For more information on each command, run the following command in the TKE CLI p
 ibmcloud tke help <command_name>
 ```
 {: pre}
-
-<!-- | `tke cryptounit-mk-rotate` | Promotes the master key in the new master key register to the current master key register after rewrapping root keys and encryption keys in the key management keystore. | `ibmcloud tke cryptounit-mk-rotate` | -->

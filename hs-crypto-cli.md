@@ -2,7 +2,7 @@
 
 copyright:
   years: 2018, 2020
-lastupdated: "2020-09-29"
+lastupdated: "2020-11-19"
 
 keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, cloud tke, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
 
@@ -68,6 +68,7 @@ To install the TKE CLI plug-in, follow these steps:
 | `tke cryptounit-admin-rm` | Removes a crypto unit administrator from the selected crypto units. | `ibmcloud tke cryptounit-admin-rm` |
 | `tke cryptounit-admins` | Lists administrators installed in the selected crypto units. | `cryptounit-admins` |
 | `tke cryptounit-compare` | Compares configuration settings of the selected crypto units. | `ibmcloud tke cryptounit-compare` |
+| `tke cryptounit-cp-btc`|Enables bitcoin (BTC) related functionality in the selected crypto units.|`ibmcloud tke cryptounit-cp-btc`|
 | `tke cryptounit-exit-impr` | Exits imprint mode in the selected crypto units. (**Deprecated.** Use `cryptounit-thrhld-set` instead.) | `ibmcloud tke cryptounit-exit-impr` |
 | `tke cryptounit-mk` | Displays master key registers for the selected crypto units. | `ibmcloud tke cryptounit-mk` |
 | `tke cryptounit-mk-clrcur` | Clears the current master key register. | `ibmcloud tke cryptounit-mk-clrcur` |

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2018, 2020
-lastupdated: "2020-11-19"
+lastupdated: "2020-12-03"
 
 keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, cloud tke, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
 
@@ -62,13 +62,14 @@ To install the TKE CLI plug-in, follow these steps:
 
 | Command name | Description | Example |
 | ------------ | ----------- | ------- |
-| `tke` | A CLI plug-in to manage crypto units in the IBM Cloud. | `ibmcloud tke` |
+| `tke` | Manages crypto units in the IBM Cloud. | `ibmcloud tke` |
 | `tke cryptounit-add` | Adds crypto units to the set of crypto units to work with. | `ibmcloud tke cryptounit-add` |
 | `tke cryptounit-admin-add` | Adds a crypto unit administrator to the selected crypto units. | `ibmcloud tke cryptounit-admin-add` |
 | `tke cryptounit-admin-rm` | Removes a crypto unit administrator from the selected crypto units. | `ibmcloud tke cryptounit-admin-rm` |
-| `tke cryptounit-admins` | Lists administrators installed in the selected crypto units. | `cryptounit-admins` |
+| `tke cryptounit-admins` | Lists administrators installed in the selected crypto units. | `ibmcloud tke cryptounit-admins` |
 | `tke cryptounit-compare` | Compares configuration settings of the selected crypto units. | `ibmcloud tke cryptounit-compare` |
 | `tke cryptounit-cp-btc`|Enables bitcoin (BTC) related functionality in the selected crypto units.|`ibmcloud tke cryptounit-cp-btc`|
+| `tke cryptounit-cp-eddsa`|Enables Edwards-curve digital signature algorithms (EdDSA) functionality in the selected crypto units.|`ibmcloud tke cryptounit-cp-eddsa`|
 | `tke cryptounit-exit-impr` | Exits imprint mode in the selected crypto units. (**Deprecated.** Use `cryptounit-thrhld-set` instead.) | `ibmcloud tke cryptounit-exit-impr` |
 | `tke cryptounit-mk` | Displays master key registers for the selected crypto units. | `ibmcloud tke cryptounit-mk` |
 | `tke cryptounit-mk-clrcur` | Clears the current master key register. | `ibmcloud tke cryptounit-mk-clrcur` |

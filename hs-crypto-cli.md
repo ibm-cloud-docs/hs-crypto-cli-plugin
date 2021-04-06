@@ -1,8 +1,8 @@
 ---
 
 copyright:
-  years: 2018, 2020
-lastupdated: "2020-12-03"
+  years: 2018, 2021
+lastupdated: "2021-02-24"
 
 keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, cloud tke, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
 
@@ -62,6 +62,9 @@ To install the TKE CLI plug-in, follow these steps:
 
 | Command name | Description | Example |
 | ------------ | ----------- | ------- |
+| `tke auto-init` | Automatically initializes the service instance. | `ibmcloud tke auto-init` |
+| `tke auto-mk-rotate` | Automatically rotates the master key with a randomly generated master key value in the recovery HSM. | `ibmcloud tke auto-mk-rotate` |
+| `tke auto-recover` | Automatically copies the current master key value from the recovery HSM to other crypto units in the same resource group. | `tke auto-recover` |
 | `tke` | Manages crypto units in the IBM Cloud. | `ibmcloud tke` |
 | `tke cryptounit-add` | Adds crypto units to the set of crypto units to work with. | `ibmcloud tke cryptounit-add` |
 | `tke cryptounit-admin-add` | Adds a crypto unit administrator to the selected crypto units. | `ibmcloud tke cryptounit-admin-add` |
@@ -70,6 +73,7 @@ To install the TKE CLI plug-in, follow these steps:
 | `tke cryptounit-compare` | Compares configuration settings of the selected crypto units. | `ibmcloud tke cryptounit-compare` |
 | `tke cryptounit-cp-btc`|Enables bitcoin (BTC) related functionality in the selected crypto units.|`ibmcloud tke cryptounit-cp-btc`|
 | `tke cryptounit-cp-eddsa`|Enables Edwards-curve digital signature algorithms (EdDSA) functionality in the selected crypto units.|`ibmcloud tke cryptounit-cp-eddsa`|
+| `tke cryptounit-cp-sig-other`| Enables non-Elliptic-curve DSA, non-Edwards-curve DSA digital signature functions in the selected crypto units.|`ibmcloud tke cryptounit-cp-sig-other`|
 | `tke cryptounit-exit-impr` | Exits imprint mode in the selected crypto units. (**Deprecated.** Use `cryptounit-thrhld-set` instead.) | `ibmcloud tke cryptounit-exit-impr` |
 | `tke cryptounit-mk` | Displays master key registers for the selected crypto units. | `ibmcloud tke cryptounit-mk` |
 | `tke cryptounit-mk-clrcur` | Clears the current master key register. | `ibmcloud tke cryptounit-mk-clrcur` |

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2018, 2021
-lastupdated: "2021-02-24"
+lastupdated: "2021-06-28"
 
 keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, cloud tke, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
 
@@ -87,6 +87,7 @@ To install the TKE CLI plug-in, follow these steps:
 | `tke cryptounit-thrhlds` | Displays signature thresholds for the selected crypto units. | `ibmcloud tke cryptounit-thrhlds` |
 | `tke cryptounit-zeroize` | Zeroizes the selected crypto units. | `ibmcloud tke cryptounit-zeroize` |
 | `tke cryptounits` | Displays the crypto units for the current resource group. | `ibmcloud tke cryptounits` |
+| `tke failover-enable`   | Enable or add failover crypto units after provisioning a service instance.  | `ibmcloud tke failover-enable`  |
 | `tke mk-add` | Creates and saves a new EP11 master key part. | `ibmcloud tke mk-add` |
 | `tke mk-rm` | Removes an EP11 master key part from this workstation. | `ibmcloud tke mk-rm` |
 | `tke mks` | Lists EP11 master key parts that are stored on this workstation. | `ibmcloud tke mks` |

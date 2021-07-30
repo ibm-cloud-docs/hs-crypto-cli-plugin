@@ -2,9 +2,9 @@
 
 copyright:
   years: 2018, 2021
-lastupdated: "2021-06-28"
+lastupdated: "2021-07-15"
 
-keywords: Hyper Protect Crypto Services, Trusted Key Entry plug-in, cloud tke, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference
+keywords: hpcs cli, hyper protect crypto services cli, Trusted Key Entry plug-in, cloud tke, TKE plug-in, CLI plug-in, TKE commands, Cloud TKE reference, cert manager cli plug-in, key management cli
 
 subcollection: hs-crypto-cli-plugin
 
@@ -18,23 +18,33 @@ subcollection: hs-crypto-cli-plugin
 {:tip: .tip}
 {:important: .important}
 
-# {{site.data.keyword.cloud_notm}} {{site.data.keyword.hscrypto}} Trusted Key Entry CLI
-{: #tke_cli_plugin}
+# {{site.data.keyword.cloud_notm}} {{site.data.keyword.hscrypto}} CLI
+{: #hpcs-cli-plugin}
 
-You can use the {{site.data.keyword.cloud}} Trusted Key Entry (TKE) command-line interface (CLI) plug-in to load the master key before you use the {{site.data.keyword.cloud_notm}} {{site.data.keyword.hscrypto}} instance.
+{{site.data.keyword.hscrypto}} provides multiple {{site.data.keyword.cloud}} CLI plug-ins for you to perform actions towards your service instances: key management CLI plug-in, Trusted Key Entry (TKE) CLI plug-in, and certificate manager CLI plug-in.
 {:shortdesc}
 
-## Installing the {{site.data.keyword.cloud_notm}} TKE CLI plug-in
+## {{site.data.keyword.hscrypto}} key management CLI plug-in
+{: #kp-cli-plugin}
+
+{{site.data.keyword.hscrypto}} integrates with the {{site.data.keyword.keymanagementserviceshort}} CLI plug-in, so that you can use the {{site.data.keyword.keymanagementserviceshort}} CLI plug-in to manage root keys and standard keys in your {{site.data.keyword.hscrypto}} instances.
+
+- For how to set up the {{site.data.keyword.keymanagementserviceshort}} CLI plug-in for {{site.data.keyword.hscrypto}}, see [Performing key management operations with the CLI](/docs/hs-crypto?topic=hs-crypto-set-up-cli).
+- For the complete key management CLI reference, see [{{site.data.keyword.keymanagementserviceshort}} CLI command reference](/docs/key-protect?topic=key-protect-cli-plugin-key-protect-cli-reference).
+
+## {{site.data.keyword.hscrypto}} Trusted Key Entry CLI Plug-in
+{: #tke-cli-plugin}
+
+You can use the TKE CLI plug-in to manage crypto units that are assigned to your account.
+
+### Installing the {{site.data.keyword.cloud_notm}} TKE CLI plug-in
 {: #install-tke-cli-plugin}
 
 To install the TKE CLI plug-in, follow these steps:
 
 1. Install the [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cloud-cli-getting-started){: external}.
 
-  {{site.data.keyword.cloud_notm}} CLI requires Java&trade; SDK 1.7.0. The prefix for running commands by using the {{site.data.keyword.cloud_notm}} CLI is `ibmcloud`. In the terminal, you are notified when updates to the `ibmcloud` CLI are available. Be sure to keep your CLI up-to-date so that you can use all the available commands and flags.
-
-  To load master key registers to the {{site.data.keyword.hscrypto}} instance, you also need to install the {{site.data.keyword.keymanagementservicefull}} plug-in. For detailed steps, see [Setting up the CLI](/docs/hs-crypto?topic=hs-crypto-set-up-cli).
-  {: tip}
+  {{site.data.keyword.cloud_notm}} CLI requires Java&trade; 1.8.0. The prefix for running commands by using the {{site.data.keyword.cloud_notm}} CLI is `ibmcloud`.
 
 2. Install the latest TKE plug-in with the following command:
 
@@ -42,6 +52,9 @@ To install the TKE CLI plug-in, follow these steps:
   ibmcloud plugin install tke
   ```
   {: pre}
+
+  You are notified on the command line when updates to the {{site.data.keyword.cloud_notm}} CLI and plug-ins are available. Be sure to keep your CLI up to date so that you can use the latest commands. You can view the current version of all installed plug-ins by running `ibmcloud plugin list`.
+  {: tip}
 
 3. Set the environment variable `CLOUDTKEFILES` on your workstation. Specify a directory where you want master key part files and signature key part files to be created and saved. Create the directory if it does not exist.
 
@@ -56,9 +69,8 @@ To install the TKE CLI plug-in, follow these steps:
 
   * On the Windows&trade; operating system, in **Control Panel**, type `environment variable` in the search box to locate the Environment Variables window. Create a CLOUDTKEFILES environment variable and set the value to the path to the key files. For example, `C:\users\tke-files`.
 
-
-## {{site.data.keyword.cloud_notm}} TKE CLI plug-in commands
-{: #commands_usage}
+### {{site.data.keyword.cloud_notm}} TKE CLI plug-in commands
+{: #tke-commands-usage}
 
 | Command name | Description | Example |
 | ------------ | ----------- | ------- |
@@ -104,3 +116,443 @@ For more information on each command, run the following command in the TKE CLI p
 ibmcloud tke help <command_name>
 ```
 {: pre}
+
+## {{site.data.keyword.hscrypto}} certificate manager CLI Plug-in
+{: #cert-manager-cli-plugin}
+
+You can use the certificate manager CLI plug-in to manage certificates and administrator signature keys for the second layer of authentication in GREP11 or PKCS #11 API connections.
+
+### Installing the certificate manager CLI plug-in
+{: #install-cert-manager-cli-plugin}
+
+To install the certificate manager CLI plug-in, follow these steps:
+
+1. Install the [{{site.data.keyword.cloud_notm}} CLI](/docs/cli?topic=cli-getting-started){: external}.
+
+  {{site.data.keyword.cloud_notm}} CLI requires Java&trade; 1.8.0. The prefix for running commands by using the {{site.data.keyword.cloud_notm}} CLI is `ibmcloud`.
+
+2. Install the latest certificate manager plug-in with the following command:
+
+  ```
+  ibmcloud plugin install hpcs-cert-mgr
+  ```
+  {: pre}
+
+  You're notified on the command line when updates to the {{site.data.keyword.cloud_notm}} CLI and plug-ins are available. Be sure to keep your CLI up to date so that you can use the latest commands. You can view the current version of all installed plug-ins by running `ibmcloud plugin list`.
+  {: tip}
+
+### {{site.data.keyword.cloud_notm}} certificate manager CLI plug-in commands
+{: #cert-manager-commands-usage}
+
+The following lists all the available certificate manager CLI commands and their corresponding usage. Use `-h` or `--help` for help information.
+
+#### hpcs-cert-mgr adminkey get
+{: #command-cert-manager-get-admin-key}
+
+Use this command to retrieve the administrator signature key of the certificate administrator.
+
+```
+ibmcloud hpcs-cert-mgr adminkey get --crn HPCS_CRN [--private]
+```
+
+- Command options:
+
+  <dl>
+  <dt>--crn HPCS_CRN</dt>
+  <dd>Required. The `crn` of your {{site.data.keyword.hscrypto}} instance. You can use the `ibmcloud resource service-instances --long` command to retrieve the `crn`.</dd>
+  <dt>--private</dt>
+  <dd>Optional. If you use this option, the certificate manager server URL points to the private network. For example: `cert-mgr.private.<region>.hs-crypto.cloud.ibm.com:443`. The `region` is the abbreviation of the geographic area where you log in to {{site.data.keyword.cloud_notm}}. In this case, you need to use the private network to connect your service instance.</dd>
+  </dl>
+
+- Example:
+
+  ```
+  export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
+  ```
+  {: pre}
+
+  ```
+  ibmcloud hpcs-cert-mgr adminkey get --crn ${HPCS_CRN}
+  ```
+  {: pre}
+
+- Output:
+
+  The command returns the output similar to the following:
+
+  ```
+  connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
+  +------------+--------+
+  | PROPERTIES | VALUES |
+  +------------+--------+
+  | PublicKey  |        |
+  +------------+--------+
+
+  command completed successfully.
+  ```
+  {: screen}
+
+#### hpcs-cert-mgr adminkey set
+{: #command-cert-manager-set-admin-key}
+
+Use this command to create the administrator signature key for the certificate administrator to connect to the certificate manager server.
+
+```
+ibmcloud hpcs-cert-mgr adminkey set --crn HPCS_CRN [--private]
+```
+
+- Command options:
+
+  <dl>
+  <dt>--crn HPCS_CRN</dt>
+  <dd>Required. The `crn` of your {{site.data.keyword.hscrypto}} instance. You can use the `ibmcloud resource service-instances --long` command to retrieve the `crn`.</dd>
+  <dt>--private</dt>
+  <dd>Optional. If you use this option, the certificate manager server URL points to the private network. For example: `cert-mgr.private.<region>.hs-crypto.cloud.ibm.com:443`. The `region` is the abbreviation of the geographic area where you log in to {{site.data.keyword.cloud_notm}}. In this case, you need to use the private network to connect your service instance.</dd>
+  </dl>
+
+- Example:
+
+  ```
+  export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
+  ```
+  {: pre}
+
+  ```
+  ibmcloud hpcs-cert-mgr adminkey set --crn ${HPCS_CRN}
+  ```
+  {: pre}
+
+- Output:
+
+  The command returns the output similar to the following:
+
+  ```
+  connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
+  +------------+-----------------------------------------------------------------------------------+
+  | KEYTYPE    | FILE                                                                              |
+  +------------+-----------------------------------------------------------------------------------+
+  | PrivateKey | /Users/username/hpcs-cert-mgr-cfg/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.priv  |
+  | PublicKey  | /Users/username/hpcs-cert-mgr-cfg/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.pub   |
+  +------------+-----------------------------------------------------------------------------------+
+
+  An automatically generated keypair is stored locally and configured to node remotely, please keep the keypair carefully!!!
+
+  command completed successfully.
+  ```
+  {: screen}
+
+#### hpcs-cert-mgr adminkey update
+{: #command-cert-manager-update-admin-key}
+
+Use this command to refresh and update the administrator signature key for the certificate administrator.
+
+```
+ibmcloud hpcs-cert-mgr adminkey update --crn HPCS_CRN --admin-priv-key ADMIN_PRIV_KEY [--private]
+```
+
+- Command options:
+
+  <dl>
+  <dt>--crn HPCS_CRN</dt>
+  <dd>Required. The `crn` of your {{site.data.keyword.hscrypto}} instance. You can use the `ibmcloud resource service-instances --long` command to retrieve the `crn`.</dd>
+  <dt>--admin-priv-key ADMIN_PRIV_KEY</dt>
+  <dd>Required. The file path of the existing private key that is stored on your local workstation. The private key is used to sign this command action towards your instance certificate manager server.</dd>
+  <dt>--private</dt>
+  <dd>Optional. If you use this option, the certificate manager server URL points to the private network. For example: `cert-mgr.private.<region>.hs-crypto.cloud.ibm.com:443`. The `region` is the abbreviation of the geographic area where you log in to {{site.data.keyword.cloud_notm}}. In this case, you need to use the private network to connect your service instance.</dd>
+  </dl>
+
+- Example:
+
+  ```
+  export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
+  ```
+  {: pre}
+
+  ```
+  export ADMIN_PRIV_KEY=/Users/admin1/hpcs-cert-mgr-cfg/44de77d2-599b-0089-2f0f-bad8d1c94a7c.priv
+  ```
+  {: pre}
+
+  ```
+  ibmcloud hpcs-cert-mgr adminkey update --crn ${HPCS_CRN} --admin-priv-key ${ADMIN_PRIV_KEY}
+  ```
+  {: pre}
+
+- Output:
+
+  The command returns the output similar to the following:
+
+  ```
+  connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
+  +------------+-----------------------------------------------------------------------------------+
+  | KEYTYPE    | FILE                                                                              |
+  +------------+-----------------------------------------------------------------------------------+
+  | PrivateKey | /Users/username/hpcs-cert-mgr-cfg/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.priv  |
+  | PublicKey  | /Users/username/hpcs-cert-mgr-cfg/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX.pub   |
+  +------------+-----------------------------------------------------------------------------------+
+
+  An automatically generated keypair is stored locally and configured to node remotely, please keep the keypair carefully!!!
+
+  command completed successfully.
+  ```
+  {: screen}
+
+#### hpcs-cert-mgr adminkey delete
+{: #command-cert-manager-delete-admin-key}
+
+Use this command to delete the administrator signature key for the certificate administrator.
+
+```
+ibmcloud hpcs-cert-mgr adminkey delete --crn HPCS_CRN --admin-priv-key ADMIN_PRIV_KEY [--private]
+```
+
+- Command options:
+
+  <dl>
+  <dt>--crn HPCS_CRN</dt>
+  <dd>Required. The `crn` of your {{site.data.keyword.hscrypto}} instance. You can use the `ibmcloud resource service-instances --long` command to retrieve the `crn`.</dd>
+  <dt>--admin-priv-key ADMIN_PRIV_KEY</dt>
+  <dd>Required. The file path of your current private key that is stored on your local workstation. The private key is used to sign this command action towards your instance certificate manager server.</dd>
+  <dt>--private</dt>
+  <dd>Optional. If you use this option, the certificate manager server URL points to the private network. For example: `cert-mgr.private.<region>.hs-crypto.cloud.ibm.com:443`. The `region` is the abbreviation of the geographic area where you log in to {{site.data.keyword.cloud_notm}}. In this case, you need to use the private network to connect your service instance.</dd>
+  </dl>
+
+- Example:
+
+  ```
+  export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
+  ```
+  {: pre}
+
+  ```
+  export ADMIN_PRIV_KEY=/Users/admin1/hpcs-cert-mgr-cfg/44de77d2-599b-0089-2f0f-bad8d1c94a7c.priv
+  ```
+  {: pre}
+
+  ```
+  ibmcloud hpcs-cert-mgr adminkey delete --crn ${HPCS_CRN} --admin-priv-key ${ADMIN_PRIV_KEY}
+  ```
+  {: pre}
+
+- Output:
+
+  The command returns the output similar to the following:
+
+  ```
+  connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
+  command completed successfully.
+  ```
+  {: screen}
+
+#### hpcs-cert-mgr cert get
+{: #command-cert-manager-get-cert}
+
+Use this command to retrieve the client certificate on your instance certificate manager server.
+
+```
+ibmcloud hpcs-cert-mgr cert get --crn HPCS_CRN --cert-id CERT_ID [--cert-store-file CERT_FILE] [--private]
+```
+
+- Command options:
+
+  <dl>
+  <dt>--crn HPCS_CRN</dt>
+  <dd>Required. The `crn` of your {{site.data.keyword.hscrypto}} instance. You can use the `ibmcloud resource service-instances --long` command to retrieve the `crn`.</dd>
+  <dt>--cert-id CERT_ID</dt>
+  <dd>Required. The string ID of the client certificate that you want to retrieve.</dd>
+  <dt>--cert-store-file CERT_FILE</dt>
+  <dd>Optional. The file path to store the retrieved certificate. If you specify this option, the file is created on your local workstation and stores the certificate content.</dd>
+  <dt>--private</dt>
+  <dd>Optional. If you use this option, the certificate manager server URL points to the private network. For example: `cert-mgr.private.<region>.hs-crypto.cloud.ibm.com:443`. The `region` is the abbreviation of the geographic area where you log in to {{site.data.keyword.cloud_notm}}. In this case, you need to use the private network to connect your service instance.</dd>
+  </dl>
+
+- Example:
+
+  ```
+  export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
+  ```
+  {: pre}
+
+  ```
+  ibmcloud hpcs-cert-mgr cert get --crn ${HPCS_CRN} --cert-id testcert --cert-store-file c/b/cert.pem
+  ```
+  {: pre}
+
+- Output:
+
+  The command returns the output similar to the following:
+
+  ```
+  connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
+  ------------------ The returned certification ------------------
+  -----BEGIN CERTIFICATE-----
+  MIIFazCCA10gAwIBAgIUVW/gPwBtOKHEwCL.........
+  ............................................
+  ............................................
+  ................................FkQF0tfc6cg=
+  -----END CERTIFICATE-----
+
+  command completed successfully.
+  ```
+  {: screen}
+
+#### hpcs-cert-mgr cert set
+{: #command-cert-manager-set-cert}
+
+Use this command to set client certificates for your instance certificate manager server.
+
+```
+ibmcloud hpcs-cert-mgr cert set --crn HPCS_CRN --admin-priv-key ADMIN_PRIV_KEY --cert-id CERT_ID --cert CERT_FILE [--private]
+```
+
+- Command options:
+
+  <dl>
+  <dt>--crn HPCS_CRN</dt>
+  <dd>Required. The `crn` of your {{site.data.keyword.hscrypto}} instance. You can use the `ibmcloud resource service-instances --long` command to retrieve the `crn`.</dd>
+  <dt>--admin-priv-key ADMIN_PRIV_KEY</dt>
+  <dd>Required. The file path of your current private key that is stored on your local workstation. The private key is used to sign this command action towards your instance certificate manager server.</dd>
+  <dt>--cert-id CERT_ID</dt>
+  <dd>Required. The string ID that you want to assign to the certificate for easy identification.</dd>
+  <dt>--cert CERT_FILE</dt>
+  <dd>Required. The certificate file that is stored on your workstation. It is suggested to use the {{site.data.keyword.cloud_notm}} Certificate Manager to order and manage SSL/TLS certificates for your applications and services.</dd>
+  <dt>--private</dt>
+  <dd>Optional. If you use this option, the certificate manager server URL points to the private network. For example: `cert-mgr.private.<region>.hs-crypto.cloud.ibm.com:443`. The `region` is the abbreviation of the geographic area where you log in to {{site.data.keyword.cloud_notm}}. In this case, you need to use the private network to connect your service instance.</dd>
+  </dl>
+
+- Example:
+
+  ```
+  export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
+  ```
+  {: pre}
+
+  ```
+  export CERT=/Users/admin1/cert.pem
+  ```
+  {: pre}
+
+  ```
+  export ADMIN_PRIV_KEY=/Users/admin1/hpcs-cert-mgr-cfg/44de77d2-599b-0089-2f0f-bad8d1c94a7c.priv
+  ```
+  {: pre}
+
+  ```
+  ibmcloud hpcs-cert-mgr cert set --crn ${HPCS_CRN} --admin-priv-key ${ADMIN_PRIV_KEY} --cert-id testcert --cert ${CERT}
+  ```
+  {: pre}
+
+- Output:
+
+  The command returns the output similar to the following:
+
+  ```
+  connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
+  command completed successfully.
+  ```
+  {: screen}
+
+#### hpcs-cert-mgr cert list
+{: #command-cert-manager-list-cert}
+
+Use this command to list all the certificates that are managed by the administrator for your instance certificate manager server.
+
+```
+ibmcloud hpcs-cert-mgr cert list --crn HPCS_CRN [--private]
+```
+
+- Command options:
+
+  <dl>
+  <dt>--crn HPCS_CRN</dt>
+  <dd>Required. The `crn` of your {{site.data.keyword.hscrypto}} instance. You can use the `ibmcloud resource service-instances --long` command to retrieve the `crn`.</dd>
+  <dt>--private</dt>
+  <dd>Optional. If you use this option, the certificate manager server URL points to the private network. For example: `cert-mgr.private.<region>.hs-crypto.cloud.ibm.com:443`. The `region` is the abbreviation of the geographic area where you log in to {{site.data.keyword.cloud_notm}}. In this case, you need to use the private network to connect your service instance.</dd>
+  </dl>
+
+- Example:
+
+  ```
+  export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
+  ```
+  {: pre}
+
+  ```
+  ibmcloud hpcs-cert-mgr cert list --crn ${HPCS_CRN}
+  ```
+  {: pre}
+
+- Output:
+
+  The command returns the output similar to the following:
+
+  ```
+  connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
+  +------------+----------------------------------------+
+  | CERTID     | CERT                                   |
+  | testcert   | -----BEGIN CERTIFICATE-----            |
+  |            | MIIFazCCA10gAwIBAgIUVW/gPwBtOKHEwCL....|
+  |            |........................................|
+  |            |............................FkQF0tfc6cg=|
+  |            | -----END CERTIFICATE-----              |
+  |            |                                        |
+  | testcert2  | -----BEGIN CERTIFICATE-----            |
+  |            | MIIFazCCA10gAwIBAgIUVW/gPwBtOKHEwCL....|
+  |            |........................................|
+  |            |............................FkQF0tfc6cg=|
+  |            | -----END CERTIFICATE-----              |
+  |            |                                        |
+  +------------+----------------------------------------+
+
+  command completed successfully.
+  ```
+  {: screen}
+
+#### hpcs-cert-mgr cert delete
+{: #command-cert-manager-delete-cert}
+
+Use this command to delete client certificates for your instance certificate manager server.
+
+```
+ibmcloud hpcs-cert-mgr cert delete --crn HPCS_CRN --admin-priv-key ADMIN_PRIV_KEY --cert-id CERT_ID [--private]
+```
+
+- Command options:
+
+  <dl>
+  <dt>--crn HPCS_CRN</dt>
+  <dd>Required. The `crn` of your {{site.data.keyword.hscrypto}} instance. You can use the `ibmcloud resource service-instances --long` command to retrieve the `crn`.</dd>
+  <dt>--admin-priv-key ADMIN_PRIV_KEY</dt>
+  <dd>Required. The file path of your current private key that is stored on your local workstation. The private key is used to sign this command action towards your instance certificate manager server.</dd>
+  <dt>--cert-id CERT_ID</dt>
+  <dd>Required. The string ID of the certificate that you want to delete.</dd>
+  <dt>--private</dt>
+  <dd>Optional. If you use this option, the certificate manager server URL points to the private network. For example: `cert-mgr.private.<region>.hs-crypto.cloud.ibm.com:443`. The `region` is the abbreviation of the geographic area where you log in to {{site.data.keyword.cloud_notm}}. In this case, you need to use the private network to connect your service instance.</dd>
+  </dl>
+
+- Example:
+
+  ```
+  export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
+  ```
+  {: pre}
+
+  ```
+  export ADMIN_PRIV_KEY=/Users/admin1/hpcs-cert-mgr-cfg/44de77d2-599b-0089-2f0f-bad8d1c94a7c.priv
+  ```
+  {: pre}
+
+  ```
+  ibmcloud hpcs-cert-mgr cert delete --crn ${HPCS_CRN} --admin-priv-key ${ADMIN_PRIV_KEY} --cert-id testcert
+  ```
+  {: pre}
+
+- Output:
+
+  The command returns the output similar to the following:
+
+  ```
+  connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
+  command completed successfully.
+  ```
+  {: screen}

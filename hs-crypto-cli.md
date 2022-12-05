@@ -76,7 +76,7 @@ To install the TKE CLI plug-in, follow these steps:
 | ------------ | ----------- | ------- |
 | `tke auto-init` | Automatically initializes the service instance. | `ibmcloud tke auto-init` |
 | `tke auto-mk-rotate` | Automatically rotates the master key with a randomly generated master key value in the recovery HSM. | `ibmcloud tke auto-mk-rotate` |
-| `tke auto-recover` | Automatically copies the current master key value from the recovery HSM to other crypto units in the same resource group. | `tke auto-recover` |
+| `tke auto-recover` | Automatically copies the current master key value from the recovery HSM to other crypto units in the same resource group. | `ibmcloud tke auto-recover` |
 | `tke` | Manages crypto units in the IBM Cloud. | `ibmcloud tke` |
 | `tke cryptounit-add` | Adds crypto units to the set of crypto units to work with. | `ibmcloud tke cryptounit-add` |
 | `tke cryptounit-admin-add` | Adds a crypto unit administrator to the selected crypto units. | `ibmcloud tke cryptounit-admin-add` |

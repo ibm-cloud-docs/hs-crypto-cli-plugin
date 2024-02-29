@@ -63,6 +63,9 @@ To install the TKE CLI plug-in, follow these steps:
         For example, you can specify the *path* to `/Users/tke-files`.
 
     - On the Windows&trade; operating system, in **Control Panel**, type `environment variable` in the search box to locate the Environment Variables window. Create a CLOUDTKEFILES environment variable and set the value to the path to the key files. For example, `C:\users\tke-files`.
+    
+    The TKE_PRIVATE_ADDR environment variable is used to set the API endpoint URL both for public endpoint and private endpoint. If you want to use the public endpoint, unset the TKE_PRIVATE_ADDR environment variable or set the TKE_PRIVATE_ADDR environment variable as the public endpoint URL: `https://tke.<region>.hs-crypto.cloud.ibm.com`.
+    {: important}
 
 ### TKE CLI plug-in commands
 {: #tke-commands-usage}

@@ -1,7 +1,6 @@
 toc:
   properties:
     subcollection: hs-crypto-cli-plugin
-    category: security
     audience: cli
     href: /docs/hs-crypto-cli-plugin
     path: hs-crypto-cli-plugin

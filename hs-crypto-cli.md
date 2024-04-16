@@ -1,8 +1,8 @@
 ---
 
 copyright:
-  years: 2018, 2023
-lastupdated: "2023-06-08"
+  years: 2018, 2024
+lastupdated: "2024-04-10"
 
 keywords: hpcs cli, hyper protect crypto services cli, trusted key entry plug-in, cloud tke, tke plug-in, cli plug-in, tke commands, cloud tke reference, cert manager cli plug-in, key management cli, uko cli, united key orchestrator cli
 
@@ -63,8 +63,8 @@ To install the TKE CLI plug-in, follow these steps:
         For example, you can specify the *path* to `/Users/tke-files`.
 
     - On the Windows&trade; operating system, in **Control Panel**, type `environment variable` in the search box to locate the Environment Variables window. Create a CLOUDTKEFILES environment variable and set the value to the path to the key files. For example, `C:\users\tke-files`.
-    
-    The TKE_PRIVATE_ADDR environment variable is used to set the API endpoint URL both for public endpoint and private endpoint. If you want to use the public endpoint, unset the TKE_PRIVATE_ADDR environment variable or set the TKE_PRIVATE_ADDR environment variable as the public endpoint URL: `https://tke.<region>.hs-crypto.cloud.ibm.com`.
+
+    The private endpoint URL is returned in `private`. For key management endpoint, use the value that is returned in the `kms` section. The KP_PRIVATE_ADDR environment variable is used to set the API endpoint URL both for public endpoint and private endpoint. If you want to use the public endpoint, make sure to set the KP_PRIVATE_ADDR environment variable as the public endpoint URL that is returned in the `public` field in the `kms` section.
     {: important}
 
 ### TKE CLI plug-in commands
@@ -118,7 +118,7 @@ ibmcloud tke help <command_name>
 ## {{site.data.keyword.hscrypto}} certificate manager CLI plug-in
 {: #cert-manager-cli-plugin}
 
-You can use the certificate manager CLI plug-in to manage certificates and administrator signature keys for [the second layer of authentication in GREP11 or PKCS #11 API connections](/docs/hs-crypto?topic=hs-crypto-enable-authentication-ep11).
+For {{site.data.keyword.hscrypto}} Standard Plan, you can use the certificate manager CLI plug-in to manage certificates and administrator signature keys for [the second layer of authentication in GREP11 or PKCS #11 API connections](/docs/hs-crypto?topic=hs-crypto-enable-authentication-ep11).
 
 ### Installing the certificate manager CLI plug-in
 {: #install-cert-manager-cli-plugin}
@@ -597,13 +597,13 @@ The following lists all the available {{site.data.keyword.uko_full_notm}} CLI co
 #### hpcs uko managed-keys
 {: #command-uko-list-managed-keys}
 
-List all managed keys in the instance. It is possible to sort by the following parameters: name, algorithm, state, activation_date, deactivation_date, created_at, updated_at, size, vault.id.
+List all managed keys in the instance. It is possible to sort by the following parameters: label, algorithm, state, activation-date, deactivation-date, created-at, updated-at, size, vault-id.
 
 If the `--all-pages` option is not set, the command will only retrieve a single page of the collection.
 {: note}
 
 ```
-ibmcloud hpcs uko managed-keys [--vault-id VAULT-ID] [--algorithm ALGORITHM] [--state STATE] [--limit LIMIT] [--offset OFFSET] [--sort SORT] [--label LABEL] [--activation-date ACTIVATION-DATE] [--activation-date-min ACTIVATION-DATE-MIN] [--activation-date-max ACTIVATION-DATE-MAX] [--deactivation-date DEACTIVATION-DATE] [--deactivation-date-min DEACTIVATION-DATE-MIN] [--deactivation-date-max DEACTIVATION-DATE-MAX] [--expiration-date EXPIRATION-DATE] [--expiration-date-min EXPIRATION-DATE-MIN] [--expiration-date-max EXPIRATION-DATE-MAX] [--created-at CREATED-AT] [--created-at-min CREATED-AT-MIN] [--created-at-max CREATED-AT-MAX] [--updated-at UPDATED-AT] [--updated-at-min UPDATED-AT-MIN] [--updated-at-max UPDATED-AT-MAX] [--size SIZE] [--size-min SIZE-MIN] [--size-max SIZE-MAX] [--referenced-keystores-type REFERENCED-KEYSTORES-TYPE] [--referenced-keystores-name REFERENCED-KEYSTORES-NAME] [--instances-keystore-type INSTANCES-KEYSTORE-TYPE]
+ibmcloud hpcs uko managed-keys [--vault-id VAULT-ID] [--algorithm ALGORITHM] [--state STATE] [--limit LIMIT] [--offset OFFSET] [--sort SORT] [--label LABEL] [--activation-date ACTIVATION-DATE] [--activation-date-min ACTIVATION-DATE-MIN] [--activation-date-max ACTIVATION-DATE-MAX] [--deactivation-date DEACTIVATION-DATE] [--deactivation-date-min DEACTIVATION-DATE-MIN] [--deactivation-date-max DEACTIVATION-DATE-MAX] [--expiration-date EXPIRATION-DATE] [--expiration-date-min EXPIRATION-DATE-MIN] [--expiration-date-max EXPIRATION-DATE-MAX] [--created-at CREATED-AT] [--created-at-min CREATED-AT-MIN] [--created-at-max CREATED-AT-MAX] [--updated-at UPDATED-AT] [--updated-at-min UPDATED-AT-MIN] [--updated-at-max UPDATED-AT-MAX] [--rotated-at-min ROTATE-AT-MIN] [--rotated-at-max ROTATE-AT-MAX] [--size SIZE] [--size-min SIZE-MIN] [--size-max SIZE-MAX] [--referenced-keystores-type REFERENCED-KEYSTORES-TYPE] [--referenced-keystores-name REFERENCED-KEYSTORES-NAME] [--instances-keystore-type INSTANCES-KEYSTORE-TYPE] [--template-name TEMPLATE-NAME] [--template-id TEMPLATE-ID] [--template-type TEMPLATE-TYPE] [--managing-systems MANAGING-SYSTEMS]
 ```
 
 - Command options
@@ -612,10 +612,10 @@ ibmcloud hpcs uko managed-keys [--vault-id VAULT-ID] [--algorithm ALGORITHM] [--
     :   Optional. The Universally Unique Identifier (UUID) of the vault. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the UUID. The length must be 36 characters. The list items must match the regular expression `/^[-0-9a-z]+$/`.
 
     --algorithm ([]string)
-    :   Optional. The algorithm of returned keys. Values that can be set are `aes`, `rsa`, `hmac`, and `ec`.
+    :   Optional. The algorithm of returned keys. Values that can be set are `aes`, `rsa`, `hmac`, `ec`, `des`, and `dilithium`.
 
     --state ([]string)
-    :   Optional. The state that returned keys are to be in. The default value is `["pre_activation","active"]`. Values that can be set are: `pre_activation`, `active`, `deactivated`, and `destroyed`.
+    :   Optional. The state that returned keys are to be in. The default value is `["pre_activation","active"]`. Values that can be set are: `pre_activation`, `active`, `deactivated`, `destroyed`, `compromised`, and `destroyed_compromised`.
 
     --limit (int64)
     :   Optional. The number of keys to retrieve. The maximum value is `1000`. The minimum value is `1`. The default value is `20`.
@@ -674,6 +674,12 @@ ibmcloud hpcs uko managed-keys [--vault-id VAULT-ID] [--algorithm ALGORITHM] [--
     --updated-at-max (string)
     :   Optional. Return only managed keys whose update time is before the parameter value. This query parameter cannot be used in conjunction with the `updated_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
 
+    --rotated-at-min (string)
+    :   Optional. Return only managed keys whose rotation time is after the parameter value.
+
+    --rotated-at-max (string)
+    :   Optional. Return only managed keys whose rotation time is before the parameter value.
+
     --size (int64)
     :   Optional. The size of the key.
 
@@ -684,13 +690,25 @@ ibmcloud hpcs uko managed-keys [--vault-id VAULT-ID] [--algorithm ALGORITHM] [--
     :   Optional. The maximum size of the key. This query parameter cannot be used in conjunction with the `size` query parameter.
 
     --referenced-keystores-type ([]string)
-    :   Optional. Type of referenced keystore. Values that can be set are `aws_kms`, `azure_key_vault`, `ibm_cloud_kms`, and `google_kms`.
+    :   Optional. Type of referenced keystore. Values that can be set are `aws_kms`, `azure_key_vault`, `ibm_cloud_kms`, `google_kms`, and `cca`.
 
     --referenced-keystores-name ([]string)
     :   Optional. Name of referenced keystore. The list items must match regular expression `/[^,]+/`.
 
     --instances-keystore-type ([]string)
-    :   Optional. Type of keystore supported by one of the instances. Values that can be set are `aws_kms`, `azure_key_vault`, `ibm_cloud_kms`, and `google_kms`.
+    :   Optional. Type of keystore supported by one of the instances. Values that can be set are `aws_kms`, `azure_key_vault`, `ibm_cloud_kms`, `google_kms`, and `cca`.
+
+    --template-name (string)
+    :   Return only managed keys whose template name begins with the string.
+
+    --template-id (string[])
+    :   Return only managed keys with the given template UUID.
+
+    --template-type (string[])
+    :   Return only managed keys with the given template type. Values that can be set are `user_defined`, `shadow`, and `system`.
+
+    --managing-systems
+    :   Return only managed keys with the given managing systems. Values that can be set are `web` and `workstation`.
 
     --all-pages (bool)
     :   Optional. Invoke multiple requests to display all pages of the collection for managed keys.
@@ -704,162 +722,386 @@ ibmcloud hpcs uko managed-keys [--vault-id VAULT-ID] [--algorithm ALGORITHM] [--
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+
     The command returns the output similar to the following example:
 
     ```
     {
-      "total_count": 3,
+      "total_count": 4,
       "limit": 20,
       "offset": 0,
       "first": {
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys?vault.id=5295ad47-2ce9-43c3-b9e7-e5a9482c362b&limit=20&offset=0"
+        "href": "/v4/managed_keys?vault.id=5295ad47-2ce9-43c3-b9e7-e5a9482c362b&limit=20&offset=0'"
       },
       "last": {
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys?vault.id=5295ad47-2ce9-43c3-b9e7-e5a9482c362b&limit=20&offset=0"
+        "href": "/v4/managed_keys?vault.id=5295ad47-2ce9-43c3-b9e7-e5a9482c362b&limit=20&offset=0"
       },
       "managed_keys": [
         {
-          "id": "8cacc6c9-a4ac-43b7-88c0-cf94765f4bf9",
+          "id": "35f690df-064a-4758-8694-b2f011810701",
           "vault": {
-            "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-            "name": "Test Vault Name",
-            "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "Vault-1",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
           },
           "template": {
-            "id": "4411f1ae-62cc-484e-9910-65d2e8f258bb",
-            "name": "Azure-Example"
+            "id": "6393e930-562c-4042-b324-45c37d3d49d9",
+            "name": "AZURE-template-920",
+            "type": [
+              "user_defined"
+            ],
+            "href": "/v4/templates/6393e930-562c-4042-b324-45c37d3d49d9"
           },
-          "description": "Azure key description",
-          "label": "AZURE-EXAMPLE-KEY",
+          "version": "1,",
+          "description": "AZURE KEY",
+          "label": "AZUREproduction2029",
           "state": "active",
           "size": "2048",
           "algorithm": "rsa",
           "verification_patterns": [
             {
               "method": "PUB-HASH-SHA-1",
-              "value": "9EBB4E22E6926F1F6B39EF5126B0F603D821D4D0"
+              "value\"": "947AA69D48EEE487048AF2999DADB8DA55769529"
             }
           ],
-          "activation_date": "2027-04-18",
-          "expiration_date": "2028-06-29",
+          "activation_date": "2028-07-14",
+          "expiration_date": "2029-09-25",
+          "label_tags": [
+            {
+              "name": "APP",
+              "value": "AZURE"
+            },
+            {
+              "name": "ENV",
+              "value": "production"
+            },
+            {
+              "name": "lay",
+              "value": "2029"
+            }
+          ],
           "tags": [
             {
-              "name": "first-tag",
-              "value": "in-Azure"
+              "name": "TAG-1",
+              "value": "AZURE-TAG"
             }
           ],
-          "created_at": "2022-03-09T11:37:24Z",
-          "updated_at": "2022-03-09T11:37:27Z",
-          "created_by": "IBMid-1308197YB4",
-          "updated_by": "IBMid-1308197YB4",
-          "referenced_keystores": [],
+          "created_at": "2023-06-05T11:33:54Z",
+          "updated_at": "2023-06-05T11:33:54Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
+          "referenced_keystores": [
+            {
+              "keystore": [
+                {
+                  "id": "2e124fa5-9ef6-406c-bb2f-9ad049ff1073",
+                  "name": "Azure Keystore",
+                  "type": "azure_key_vault",
+                  "href": "v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+                }
+              ]
+            }
+          ],
           "instances": [
             {
-              "id": "3235c1b2-c62b-46e8-a5ce-acd7a8b2c52e",
-              "label_in_keystore": "AZURE-EXAMPLE-KEY",
+              "id": "acb332dd-216c-44dd-8593-02bd2119ec62",
+              "label_in_keystore\"": "AZUREproduction2029",
               "keystore": {
-                "group": "Production",
+                "group": "Production AZURE GB",
                 "type": "azure_key_vault"
+              },
+              "azure_key_protection_level": "software"
+            }
+          ],
+          "href": "/v4/managed_keys/35f690df-064a-4758-8694-b2f011810701",
+          "status_in_keystores": [
+            {
+              "keystore": [
+                {
+                  "id": "2e124fa5-9ef6-406c-bb2f-9ad049ff1073",
+                  "name": "Azure Keystore",
+                  "type": "azure_key_vault",
+                  "href": "v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+                }
+              ],
+              "status": "active",
+              "keystore_sync_flag": "ok",
+              "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+              "key_id_in_keystore": "d1e2525c-62c8-4df2-9173-69e1a7bc8cdb/d1e2525c-62c8-4df2-9173-69e1a7bc8cdb"
+            }
+          ]
+        },
+        {
+          "id": "ceb54688-827c-4e31-afa8-4c0122465a5b",
+          "vault": {
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "EXAMPLE-VAULT",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
+          },
+          "template": {
+            "id": "7a4e3659-083b-4d77-8562-7081eb197e90",
+            "name": "AWS-EXAMPLE-TEMPLATE",
+            "type": [
+              "user_defined"
+            ],
+            "href": "/v4/templates/7a4e3659-083b-4d77-8562-7081eb197e90"
+          },
+          "version": 1,
+          "description": "AWS key template description",
+          "label": "AWS-production-2029",
+          "state": "active",
+          "size": 256,
+          "algorithm": "aes",
+          "verification_patterns": [
+            {
+              "method\"": "ENC-ZERO",
+              "value": "C05CA1"
+            }
+          ],
+          "activation_date": "2028-07-14",
+          "expiration_date": "2029-09-25",
+          "label_tags": [
+            {
+              "name": "APP",
+              "value": "AWS"
+            },
+            {
+              "name": "ENV",
+              "value": "production"
+            },
+            {
+              "name": "lay",
+              "value": "2029"
+            }
+          ],
+          "tags": [
+            {
+              "name": "TAG-1",
+              "value": "AWS-TAG"
+            }
+          ],
+          "created_at": "2023-06-05T10:40:13Z",
+          "updated_at": "2023-06-05T10:40:19Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
+          "referenced_keystores": [
+            {
+              "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+              "name": "AWS KMS Keystore 335",
+              "type": "aws_kms",
+              "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+            }
+          ],
+          "instances": [
+            {
+              "id": "8c2bef79-dd15-477c-93f0-0ae62264d4b6",
+              "label_in_keystore": "AWS-production-2029",
+              "type": "secret_key",
+              "keystore": {
+                "group\"": "Production-AWS-DE",
+                "type\"": "aws_kms"
               }
             }
           ],
-          "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/8cacc6c9-a4ac-43b7-88c0-cf94765f4bf9"
+          "href": "/v4/managed_keys/ceb54688-827c-4e31-afa8-4c0122465a5b",
+          "status_in_keystores": [
+            {
+              "keystore": {
+                "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+                "name": "AWS KMS Keystore 335",
+                "type": "aws_kms",
+                "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+              },
+              "status": "active",
+              "keystore_sync_flag": "ok",
+              "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+              "key_id_in_keystore": "arn:aws:kms:eu-central-1:584492040385:key/52eca0ad-79ca-4c16-8934-986ac5d14b73"
+            }
+          ]
         },
         {
-          "id": "3dab42dc-6941-4841-8d27-4dabcc5aa09e",
+          "id": "0beedc06-4608-48ae-8ae3-8b7bf3c2c39f",
           "vault": {
-            "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-            "name": "Test Vault Name",
-            "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "Vault-2",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
           },
           "template": {
-            "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-            "name": "IBM-CLOUD-EXAMPLE-TEMPLATE"
+            "id": "64f98479-392d-4af2-a076-77cc21b8c6f3",
+            "name": "IBM-CLOUD-TEMPLATE",
+            "type": [
+              "user_defined"
+            ],
+            "href": "/v4/templates/64f98479-392d-4af2-a076-77cc21b8c6f3"
           },
-          "description": "IBM CLOUD key template description",
-          "label": "IBM CLOUD KEY",
+          "version": 1,
+          "description": "",
+          "label": "IBMCloudProduction2029",
           "state": "active",
           "size": "256",
           "algorithm": "aes",
           "verification_patterns": [
             {
-              "method": "enc-zer",
-              "value": "DDFA4A"
+              "method": "ENC-ZERO",
+              "value": "4ADDCB"
             }
           ],
-          "activation_date": "2027-04-18",
-          "expiration_date": "2028-06-29",
+          "activation_date": "2028-07-14",
+          "expiration_date": "2029-09-25",
+          "label_tags": [
+            {
+              "name": "APP",
+              "value": "IBMCloud"
+            },
+            {
+              "name": "ENV",
+              "value": "Production"
+            },
+            {
+              "name": "lay",
+              "value": "2029"
+            }
+          ],
           "tags": [
             {
-              "name": "first-tag",
-              "value": "for-ibm"
+              "name": "TAG-1",
+              "value": "AWS-TAG"
             }
           ],
-          "created_at": "2022-03-09T11:26:01Z",
-          "updated_at": "2022-03-09T11:26:04Z",
-          "created_by": "IBMid-1308197YB4",
-          "updated_by": "IBMid-1308197YB4",
-          "referenced_keystores": [],
+          "created_at": "2023-06-05T11:59:47Z",
+          "updated_at": "2023-06-05T11:59:47Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
+          "referenced_keystores": [
+            {
+              "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+              "name": "IBM CLOUD KEYSTORE",
+              "type": "ibm_cloud_kms",
+              "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+            }
+          ],
           "instances": [
             {
-              "id": "ea7b6b27-d71b-4fe9-bbfe-309c7ca713a6",
-              "label_in_keystore": "IBM CLOUD KEY",
+              "id": "0c5b14ea-a3dd-407c-af7c-fd74575ccbad",
+              "label_in_keystore": "IBMCloudProduction2029",
               "type": "secret_key",
               "keystore": {
-                "group": "Production",
+                "group": "Production External GB",
                 "type": "ibm_cloud_kms"
               }
             }
           ],
-          "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+          "href": "/v4/managed_keys/0beedc06-4608-48ae-8ae3-8b7bf3c2c39f",
+          "status_in_keystores": [
+            {
+              "keystore": {
+                "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+                "name": "IBM CLOUD KEYSTORE",
+                "type": "ibm_cloud_kms",
+                "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+              },
+              "status": "active",
+              "keystore_sync_flag": "ok",
+              "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+              "key_id_in_keystore": "804854d0-4eb7-416e-8ae2-45ba56921c8a/804854d0-4eb7-416e-8ae2-45ba56921c8a"
+            }
+          ]
         },
         {
-          "id": "c2d8d0ee-c333-414f-8e64-af47320e5a46",
+          "id": "d7b8204c-4f8f-4ba1-b306-5434ae817f51",
           "vault": {
-            "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-            "name": "Test Vault Name",
-            "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "Vault-3",
+            "href": "v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
           },
           "template": {
-            "id": "2014f3ba-87ea-4125-aa9f-95141ede04cf",
-            "name": "AWS-KMS-TEMPLATE"
+            "id": "09d229e5-e330-4e85-a7ee-cc8555d38603",
+            "name": "GOOGLE-TEMPLATE-86",
+            "type": [
+              "user_defined"
+            ],
+            "href": "/v4/templates/09d229e5-e330-4e85-a7ee-cc8555d38603"
           },
-          "description": "AWS KMS key template description",
-          "label": "AWS-KMS-KEY",
+          "version": 1,
+          "description": "Google Key",
+          "label": "Google-Production-2029",
           "state": "active",
           "size": "256",
           "algorithm": "aes",
           "verification_patterns": [
             {
-              "method": "enc-zero",
-              "value": "DDD779"
+              "method\"": "ENC-ZERO",
+              "value": "C3F432"
             }
           ],
-          "activation_date": "2027-04-18",
-          "expiration_date": "2028-06-29",
+          "activation_date": "2028-07-14",
+          "expiration_date": "2029-09-25",
+          "label_tags": [
+            {
+              "name": "APP",
+              "value": "Google"
+            },
+            {
+              "name": "ENV",
+              "value": "Production"
+            },
+            {
+              "name": "lay",
+              "value": "2029"
+            }
+          ],
           "tags": [
             {
-              "name": "first-tag",
-              "value": "for-AWS-KMS"
+              "name": "TAG-1",
+              "value": "Google-TAG"
             }
           ],
-          "created_at": "2022-03-09T11:55:36Z",
-          "updated_at": "2022-03-09T11:55:39Z",
-          "created_by": "IBMid-1308197YB4",
-          "updated_by": "IBMid-1308197YB4",
-          "referenced_keystores": [],
+          "created_at": "2023-06-05T13:18:28",
+          "updated_at": "2023-06-05T13:18:28Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
+          "referenced_keystores": [
+            {
+              "id": "6e026faa-d44d-4a1a-aeea-0e1ef2840cba",
+              "name": "Google Keystore",
+              "type": "google_kms",
+              "href": "/v4/keystores/6e026faa-d44d-4a1a-aeea-0e1ef2840cba"
+            }
+          ],
           "instances": [
             {
-              "id": "acf9af98-a459-4ef1-9c64-6cd987187cb5",
-              "label_in_keystore": "AWS-KMS-KEY",
+              "id": "ed74a984-2057-484c-9198-54839f3fec62",
+              "label_in_keystore": "Google-Production-2029",
               "type": "secret_key",
               "keystore": {
-                "group": "Production",
-                "type": "aws_kms"
-              }
+                "group": "Production Google",
+                "type": "google_kms"
+              },
+              "google_key_protection_level": "software",
+              "google_key_purpose": "encrypt_decrypt",
+              "google_kms_algorithm": "google_symmetric_encryption"
             }
           ],
-          "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/c2d8d0ee-c333-414f-8e64-af47320e5a46"
+          "href": "/v4/managed_keys/d7b8204c-4f8f-4ba1-b306-5434ae817f51",
+          "status_in_keystores": [
+            {
+              "keystore": {
+                "id": "6e026faa-d44d-4a1a-aeea-0e1ef2840cba",
+                "name": "Google Keystore",
+                "type": "google_kms",
+                "href": "/v4/keystores/6e026faa-d44d-4a1a-aeea-0e1ef2840cba"
+              },
+              "status": "active",
+              "keystore_sync_flag": "ok",
+              "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+              "key_id_in_keystore": "projects/plated-field-364019/locations/europe-west3/keyRings/uko-ring/cryptoKeys/ROBOT-Google-Key-05-06-nciYX/cryptoKeyVersions/1"
+            }
+          ]
         }
       ]
     }
@@ -872,13 +1114,10 @@ ibmcloud hpcs uko managed-keys [--vault-id VAULT-ID] [--algorithm ALGORITHM] [--
 Create a new key based on the supplied template. The template must exist in your instance before you can run this command.
 
 ```
-ibmcloud hpcs uko managed-key-create --uko-vault UKO-VAULT --template-name TEMPLATE-NAME --vault VAULT --label LABEL [--tags TAGS] [--description DESCRIPTION]
+ibmcloud hpcs uko managed-key-create --template-name TEMPLATE-NAME --vault VAULT --label LABEL [--tags TAGS] [--description DESCRIPTION]
 ```
 
 - Command options
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the UUID.
 
     --template-name (string)
     :   Required. The name of the key template to use when you create a key. The length must be between 1 and 30 characters. The value must match the regular expression `/^[A-Za-z][A-Za-z0-9-]+$/`.
@@ -899,9 +1138,8 @@ ibmcloud hpcs uko managed-key-create --uko-vault UKO-VAULT --template-name TEMPL
 
     ```
     ibmcloud hpcs uko managed-key-create \
-      --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
       --template-name=IBM-CLOUD-EXAMPLE-TEMPLATE \
-      --vault='{"id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b"}' \
+      --vault='{"id": "93777bca-baef-4070-b9b5-a2e6079df1b4"}' \
       --label='IBM CLOUD KEY' \
       --tags='[{"name": "first-tag", "value": "for-IBM-CLOUD"}]' \
       --output json
@@ -910,58 +1148,104 @@ ibmcloud hpcs uko managed-key-create --uko-vault UKO-VAULT --template-name TEMPL
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | Location | String | Path to newly created resource, relative to context root. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-26T14:18:10Z
     {
-      "id": "3dab42dc-6941-4841-8d27-4dabcc5aa09e",
+      "id": "ceb54688-827c-4e31-afa8-4c0122465a5b",
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "AWS-EXAMPLE-VAULT",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
       "template": {
-        "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-        "name": "IBM-CLOUD-EXAMPLE-TEMPLATE"
+        "id": "7a4e3659-083b-4d77-8562-7081eb197e90",
+        "name": "AWS-EXAMPLE-TEMPLATE",
+        "type": [
+          "user_defined"
+        ],
+        "href": "/v4/templates/7a4e3659-083b-4d77-8562-7081eb197e90"
       },
-      "description": "IBM CLOUD key template description",
-      "label": "IBM CLOUD KEY",
+      "version": 1,
+      "description": "AWS key template description",
+      "label": "AWS-production-2029",
       "state": "active",
-      "size": "256",
+      "size": 256,
       "algorithm": "aes",
       "verification_patterns": [
         {
-          "method": "enc-zero",
-          "value": "DDFA4A"
+          "method\"": "ENC-ZERO",
+          "value": "C05CA1"
         }
       ],
-      "activation_date": "2027-04-18",
-      "expiration_date": "2028-06-29",
+      "activation_date": "2028-07-14",
+      "expiration_date": "2029-09-25",
+      "label_tags": [
+        {
+          "name": "APP",
+          "value": "AWS"
+        },
+        {
+          "name": "ENV",
+          "value": "production"
+        },
+        {
+          "name": "lay",
+          "value": "2029"
+        }
+      ],
       "tags": [
         {
-          "name": "first-tag",
-          "value": "for-ibm"
+          "name": "TAG-1",
+          "value": "AWS-TAG"
         }
       ],
-      "created_at": "2022-03-09T11:26:01Z",
-      "updated_at": "2022-03-09T11:26:04Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
-      "referenced_keystores": [],
+      "created_at": "2023-06-05T10:40:13Z",
+      "updated_at": "2023-06-05T10:40:19Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
+      "referenced_keystores": [
+        {
+          "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+          "name": "AWS KMS Keystore 335",
+          "type": "aws_kms",
+          "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+        }
+      ],
       "instances": [
         {
-          "id": "ea7b6b27-d71b-4fe9-bbfe-309c7ca713a6",
-          "label_in_keystore": "IBM CLOUD KEY",
+          "id": "8c2bef79-dd15-477c-93f0-0ae62264d4b6",
+          "label_in_keystore": "AWS-production-2029",
           "type": "secret_key",
           "keystore": {
-            "group": "Production",
-            "type": "ibm_cloud_kms"
+            "group\"": "Production-AWS-DE",
+            "type\"": "aws_kms"
           }
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+      "href": "/v4/managed_keys/ceb54688-827c-4e31-afa8-4c0122465a5b",
+      "status_in_keystores": [
+        {
+          "keystore": {
+            "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+            "name": "AWS KMS Keystore 335",
+            "type": "aws_kms",
+            "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+          },
+          "status": "active",
+          "keystore_sync_flag": "ok",
+          "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+          "key_id_in_keystore": "arn:aws:kms:eu-central-1:584492040385:key/52eca0ad-79ca-4c16-8934-986ac5d14b73"
+        }
+      ]
     }
     ```
     {: screen}
@@ -972,16 +1256,13 @@ ibmcloud hpcs uko managed-key-create --uko-vault UKO-VAULT --template-name TEMPL
 Delete a managed key by key ID from the vault. Make sure that the key is in a _Destroyed_ state before you run this command.
 
 ```
-ibmcloud hpcs uko managed-key-delete --id ID --uko-vault UKO-VAULT --if-match IF-MATCH
+ibmcloud hpcs uko managed-key-delete --id ID --if-match IF-MATCH
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
 
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko managed-key` command to retrieve the ETag.
@@ -991,14 +1272,19 @@ ibmcloud hpcs uko managed-key-delete --id ID --uko-vault UKO-VAULT --if-match IF
     ```
     ibmcloud hpcs uko managed-key-delete \
       --id=21a7498e-2ae4-47ee-85ac-a19bf64e92fa \
-      --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
       --if-match=2022-05-27T10:15:38Z
     ```
     {: pre}
 
 - Output
 
-    The command returns the output similar to the   following example:
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+
+    The command returns the output similar to the following example:
 
     ```
     ...
@@ -1012,7 +1298,7 @@ ibmcloud hpcs uko managed-key-delete --id ID --uko-vault UKO-VAULT --if-match IF
 Retrieve a managed key and its details by specifying the key ID.
 
 ```
-ibmcloud hpcs uko managed-key --id ID --uko-vault UKO-VAULT
+ibmcloud hpcs uko managed-key --id ID
 ```
 
 - Command options
@@ -1020,73 +1306,114 @@ ibmcloud hpcs uko managed-key --id ID --uko-vault UKO-VAULT
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
 
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
-
 - Example
 
     ```
     ibmcloud hpcs uko managed-key \
       --id=21a7498e-2ae4-47ee-85ac-a19bf64e92fa \
-      --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
       --output json
     ```
     {: pre}
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
   
     ```
-    ETag
-    2022-05-26T14:18:10Z
     {
-      "id": "3dab42dc-6941-4841-8d27-4dabcc5aa09e",
+      "id": "ceb54688-827c-4e31-afa8-4c0122465a5b",
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "AWS-EXAMPLE-VAULT",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
       "template": {
-        "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-        "name": "IBM-CLOUD-EXAMPLE-TEMPLATE"
+        "id": "7a4e3659-083b-4d77-8562-7081eb197e90",
+        "name": "AWS-EXAMPLE-TEMPLATE",
+        "type": [
+          "user_defined"
+        ],
+        "href": "/v4/templates/7a4e3659-083b-4d77-8562-7081eb197e90"
       },
-      "description": "IBM CLOUD key template description",
-      "label": "IBM CLOUD KEY",
+      "version": 1,
+      "description": "AWS key template description",
+      "label": "AWS-production-2029",
       "state": "active",
-      "size": "256",
+      "size": 256,
       "algorithm": "aes",
       "verification_patterns": [
         {
-          "method": "enc-zero",
-          "value": "DDFA4A"
+          "method\"": "ENC-ZERO",
+          "value": "C05CA1"
         }
       ],
-      "activation_date": "2027-04-18",
-      "expiration_date": "2028-06-29",
+      "activation_date": "2028-07-14",
+      "expiration_date": "2029-09-25",
+      "label_tags": [
+        {
+          "name": "APP",
+          "value": "AWS"
+        },
+        {
+          "name": "ENV",
+          "value": "production"
+        },
+        {
+          "name": "lay",
+          "value": "2029"
+        }
+      ],
       "tags": [
         {
-          "name": "first-tag",
-          "value": "for-ibm"
+          "name": "TAG-1",
+          "value": "AWS-TAG"
         }
       ],
-      "created_at": "2022-03-09T11:26:01Z",
-      "updated_at": "2022-03-09T11:26:04Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
-      "referenced_keystores": [],
+      "created_at": "2023-06-05T10:40:13Z",
+      "updated_at": "2023-06-05T10:40:19Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
+      "referenced_keystores": [
+        {
+          "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+          "name": "AWS KMS Keystore 335",
+          "type": "aws_kms",
+          "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+        }
+      ],
       "instances": [
         {
-          "id": "ea7b6b27-d71b-4fe9-bbfe-309c7ca713a6",
-          "label_in_keystore": "IBM CLOUD KEY",
+          "id": "8c2bef79-dd15-477c-93f0-0ae62264d4b6",
+          "label_in_keystore": "AWS-production-2029",
           "type": "secret_key",
           "keystore": {
-            "group": "Production",
-            "type": "ibm_cloud_kms"
+            "group\"": "Production-AWS-DE",
+            "type\"": "aws_kms"
           }
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+      "href": "/v4/managed_keys/ceb54688-827c-4e31-afa8-4c0122465a5b",
+      "status_in_keystores": [
+        {
+          "keystore": {
+            "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+            "name": "AWS KMS Keystore 335",
+            "type": "aws_kms",
+            "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+          },
+          "status": "active",
+          "keystore_sync_flag": "ok",
+          "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+          "key_id_in_keystore": "arn:aws:kms:eu-central-1:584492040385:key/52eca0ad-79ca-4c16-8934-986ac5d14b73"
+        }
+      ]
     }
     ```
     {: screen}
@@ -1097,16 +1424,13 @@ ibmcloud hpcs uko managed-key --id ID --uko-vault UKO-VAULT
 Update attributes of a managed key. You can only modify the key's state separately from other changes. Changing a key's state affects its availability for cryptographic operations in keystores.
 
 ```
-ibmcloud hpcs uko managed-key-update --id ID --uko-vault UKO-VAULT --if-match IF-MATCH [--label LABEL] [--activation-date ACTIVATION-DATE] [--expiration-date EXPIRATION-DATE] [--tags TAGS] [--description DESCRIPTION]
+ibmcloud hpcs uko managed-key-update --id ID --if-match IF-MATCH [--label LABEL] [--activation-date ACTIVATION-DATE] [--expiration-date EXPIRATION-DATE] [--tags TAGS] [--description DESCRIPTION]
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
 
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko managed-key` command to retrieve the ETag.
@@ -1131,7 +1455,6 @@ ibmcloud hpcs uko managed-key-update --id ID --uko-vault UKO-VAULT --if-match IF
     ```
     ibmcloud hpcs uko managed-key-update \
       --id=21a7498e-2ae4-47ee-85ac-a19bf64e92fa \
-      --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
       --if-match=2022-05-26T14:18:10Z \
       --description="updated description" \
       --output json
@@ -1140,58 +1463,103 @@ ibmcloud hpcs uko managed-key-update --id ID --uko-vault UKO-VAULT --if-match IF
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
   
     ```
-    ETag
-    2022-05-26T14:26:39Z
     {
-      "id": "3dab42dc-6941-4841-8d27-4dabcc5aa09e",
+      "id": "ceb54688-827c-4e31-afa8-4c0122465a5b",
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "AWS-EXAMPLE-VAULT",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
       "template": {
-        "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-        "name": "IBM-CLOUD-EXAMPLE-TEMPLATE"
+        "id": "7a4e3659-083b-4d77-8562-7081eb197e90",
+        "name": "AWS-EXAMPLE-TEMPLATE",
+        "type": [
+          "user_defined"
+        ],
+        "href": "/v4/templates/7a4e3659-083b-4d77-8562-7081eb197e90"
       },
-      "description": "IBM CLOUD key template description",
-      "label": "IBM CLOUD KEY",
+      "version": 1,
+      "description": "AWS key template description",
+      "label": "AWS-production-2029",
       "state": "active",
-      "size": "256",
+      "size": 256,
       "algorithm": "aes",
       "verification_patterns": [
         {
-          "method": "enc-zero",
-          "value": "DDFA4A"
+          "method\"": "ENC-ZERO",
+          "value": "C05CA1"
         }
       ],
-      "activation_date": "2027-04-18",
-      "expiration_date": "2028-06-29",
+      "activation_date": "2028-07-14",
+      "expiration_date": "2029-09-25",
+      "label_tags": [
+        {
+          "name": "APP",
+          "value": "AWS"
+        },
+        {
+          "name": "ENV",
+          "value": "production"
+        },
+        {
+          "name": "lay",
+          "value": "2029"
+        }
+      ],
       "tags": [
         {
-          "name": "first-tag",
-          "value": "for-ibm"
+          "name": "TAG-1",
+          "value": "AWS-TAG"
         }
       ],
-      "created_at": "2022-03-09T11:26:01Z",
-      "updated_at": "2022-03-09T11:26:04Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
-      "referenced_keystores": [],
+      "created_at": "2023-06-05T10:40:13Z",
+      "updated_at": "2023-06-05T10:40:19Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
+      "referenced_keystores": [
+        {
+          "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+          "name": "AWS KMS Keystore 335",
+          "type": "aws_kms",
+          "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+        }
+      ],
       "instances": [
         {
-          "id": "ea7b6b27-d71b-4fe9-bbfe-309c7ca713a6",
-          "label_in_keystore": "IBM CLOUD KEY",
+          "id": "8c2bef79-dd15-477c-93f0-0ae62264d4b6",
+          "label_in_keystore": "AWS-production-2029",
           "type": "secret_key",
           "keystore": {
-            "group": "Production",
-            "type": "ibm_cloud_kms"
+            "group\"": "Production-AWS-DE",
+            "type\"": "aws_kms"
           }
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+      "href": "/v4/managed_keys/ceb54688-827c-4e31-afa8-4c0122465a5b",
+      "status_in_keystores": [
+        {
+          "keystore": {
+            "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+            "name": "AWS KMS Keystore 335",
+            "type": "aws_kms",
+            "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+          },
+          "status": "active",
+          "keystore_sync_flag": "ok",
+          "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+          "key_id_in_keystore": "arn:aws:kms:eu-central-1:584492040385:key/52eca0ad-79ca-4c16-8934-986ac5d14b73"
+        }
+      ]
     }
     ```
     {: screen}
@@ -1205,16 +1573,13 @@ If the `--all-pages` option is not set, the command only retrieves a single page
 {: note}
 
 ```
-ibmcloud hpcs uko associated-resources-for-managed-key --id ID --uko-vault UKO-VAULT [--limit LIMIT] [--offset OFFSET] [--sort SORT]
+ibmcloud hpcs uko associated-resources-for-managed-key --id ID [--limit LIMIT] [--offset OFFSET] [--sort SORT]
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
 
     --limit (int64)
     :   Optional. The number of resources to retrieve. The value must be between 1 and 1000.
@@ -1233,12 +1598,17 @@ ibmcloud hpcs uko associated-resources-for-managed-key --id ID --uko-vault UKO-V
     ```
     ibmcloud hpcs uko associated-resources-for-managed-key \
     --id=93777bca-baef-4070-b9b5-a2e6079df1b4 \
-    --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
     --output json
     ```
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
 
@@ -1291,6 +1661,512 @@ ibmcloud hpcs uko associated-resources-for-managed-key --id ID --uko-vault UKO-V
     ```
     {: screen}
 
+#### hpcs uko managed-keys-from-keystore
+{: #command-uko-managed-keys-from-keystore}
+
+List all managed keys that are assigned to the keystore.
+
+If the `--all-pages` option is not set, the command only retrieves a single page of the collection.
+{: note}
+
+```
+ibmcloud hpcs uko managed-keys-from-keystore --id ID [--algorithm ALGORITHM] [--state STATE] [--limit LIMIT] [--offset OFFSET] [--sort SORT] [--label LABEL] [--activation-date ACTIVATION-DATE] [--activation-date-min ACTIVATION-DATE-MIN] [--activation-date-max ACTIVATION-DATE-MAX] [--deactivation-date DEACTIVATION-DATE] [--deactivation-date-min DEACTIVATION-DATE-MIN] [--deactivation-date-max DEACTIVATION-DATE-MAX] [--expiration-date EXPIRATION-DATE] [--expiration-date-min EXPIRATION-DATE-MIN] [--expiration-date-max EXPIRATION-DATE-MAX] [--created-at CREATED-AT] [--created-at-min CREATED-AT-MIN] [--created-at-max CREATED-AT-MAX] [--updated-at UPDATED-AT] [--updated-at-min UPDATED-AT-MIN] [--updated-at-max UPDATED-AT-MAX] [--rotate-at-min ROTATE-AT-MIN] [--rotate-at-max ROTATE-AT-MAX] [--size SIZE] [--size-min SIZE-MIN] [--size-max SIZE-MAX] [--template-name TEMPLATE-NAME] [--template-id TEMPLATE-ID] [--template-type TEMPLATE-TYPE]
+```
+
+- Command options
+
+    --uko-vault (string)
+    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the UUID.
+
+    --id (string)
+    :   Required. The UUID of the keystore. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
+
+    --algorithm (string)
+    :   Optional. The algorithm of the returned keys. Values that can be set are `aes`, `rsa`, `hmac`, and `ec`.
+
+    --state (string)
+    :   Optional. The state that returned keys are to be in. The default value is `["pre_activation","active"]`. Values that can be set are: `pre_activation`, `active`, `deactivated`, `destroyed`.
+
+    --limit (int64)
+    :   Optional. The number of keys to retrieve. The value must be between 1 and 1000.
+
+    --offset (int64)
+    :   Optional. The number of keys to skip. The minimum value is `0`.
+
+    --sort ([]string)
+    :   Optional. The sorting order. The default value is `["-updated_at"]`. The list items must match regular expression `/^-?[a-z0-9_.\\[\\],-]+$/`.
+
+    --label (string)
+    :   Optional. The label of the key. The value must match regular expression `/.+/`.
+
+    --activation-date (string)
+    :   Optional. Return only managed keys whose activation date matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --activation-date-min (string)
+    :   Optional. Return only managed keys whose activation date is at or after the parameter value. This query parameter cannot be used in conjunction with the `activation_date` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --activation-date-max (string)
+    :   Optional. Return only managed keys whose activation date is at or before the parameter value. This query parameter cannot be used in conjunction with the `activation_date` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --deactivation-date (string)
+    :   Optional. Return only managed keys whose deactivation date matches the parameter. This query parameter cannot be used in conjunction with the `expiration_date` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --deactivation-date-min (string)
+    :   Optional. Return only managed keys whose deactivation date is at or after the parameter value. This query parameter cannot be used in conjunction with the `deactivation_date`, `expiration_date`, `expiration_date_min`, and `expiration_date_max` query parameters. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --deactivation-date-max (string)
+    :   Optional. Return only managed keys whose deactivation date is at or before the parameter value. This query parameter cannot be used in conjunction with the `deactivation_date`, `expiration_date`, `expiration_date_min`, and `expiration_date_max` query parameters. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --expiration-date (string)
+    :   Optional. Return only managed keys whose deactivation date matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --expiration-date-min (string)
+    :   Optional. Return only managed keys whose deactivation date is at or after the parameter value. This query parameter cannot be used in conjunction with the `deactivation_date`, `expiration_date`, `deactivation_date_min`, and `deactivation_date_max` query parameters. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --expiration-date-max (string)
+    :   Optional. Return only managed keys whose deactivation date is at or before the parameter value. This query parameter cannot be used in conjunction with the `deactivation_date`, `expiration_date`, `deactivation_date_min`, and `deactivation_date_max` query parameters. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --created-at (string)
+    :   Optional. Return only managed keys whose creation time matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --created-at-min (string)
+    :   Optional. Return only managed keys whose creation time is at or after the parameter value. This query parameter cannot be used in conjunction with the `created_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --created-at-max (string)
+    :   Optional. Return only managed keys whose creation time is at or before the parameter value. This query parameter cannot be used in conjunction with the `created_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --updated-at (string)
+    :   Optional. Return only managed keys whose update time matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --updated-at-min (string)
+    :   Optional. Return only managed keys whose update time is after the parameter value. This query parameter cannot be used in conjunction with the `updated_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --updated-at-max (string)
+    :   Optional. Return only managed keys whose update time is before the parameter value. This query parameter cannot be used in conjunction with the `updated_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --rotate-at-min (string)
+    :   Optional. Return only managed keys whose rotation date is after the parameter value.
+
+    --rotate-at-max (string)
+    :   Optional. Return only managed keys whose rotation date is before the parameter value.
+
+    --size (int64)
+    :   Optional. The size of the key.
+
+    --size-min (int64)
+    :   Optional. The minimum size of the key. This query parameter cannot be used in conjunction with the `size` query parameter.
+
+    --size-max (int64)
+    :   Optional. The maximum size of the key. This query parameter cannot be used in conjunction with the `size` query parameter.
+
+    --template-name (string)
+    :   Return only managed keys whose template name begins with the string.
+
+    --template-id (string[])
+    :   Return only managed keys with the given template UUID.
+
+    --template-type (string[])
+    :   Return only managed keys with the given template type. Values that can be set are `user_defined`, `shadow`, and `system`.
+
+    --all-pages (bool)
+    :   Optional. Invoke multiple requests to display all pages of the collection for managed keys.
+
+- Example
+
+    ```
+    ibmcloud hpcs uko managed-keys-from-keystore \
+      --id=f779c44d-b90e-4917-b8b0-28d4591fefda \
+      --output json
+    ```
+    {: pre}
+
+- Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+
+    The command returns the output similar to the following example:
+
+    ```
+    {
+      "total_count": 4,
+      "limit": 20,
+      "offset": 0,
+      "first": {
+        "href": "/v4/managed_keys?vault.id=5295ad47-2ce9-43c3-b9e7-e5a9482c362b&limit=20&offset=0'"
+      },
+      "last": {
+        "href": "/v4/managed_keys?vault.id=5295ad47-2ce9-43c3-b9e7-e5a9482c362b&limit=20&offset=0"
+      },
+      "managed_keys": [
+        {
+          "id": "35f690df-064a-4758-8694-b2f011810701",
+          "vault": {
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "Vault-1",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
+          },
+          "template": {
+            "id": "6393e930-562c-4042-b324-45c37d3d49d9",
+            "name": "AZURE-template-920",
+            "type": [
+              "user_defined"
+            ],
+            "href": "/v4/templates/6393e930-562c-4042-b324-45c37d3d49d9"
+          },
+          "version": "1,",
+          "description": "AZURE KEY",
+          "label": "AZUREproduction2029",
+          "state": "active",
+          "size": "2048",
+          "algorithm": "rsa",
+          "verification_patterns": [
+            {
+              "method": "PUB-HASH-SHA-1",
+              "value\"": "947AA69D48EEE487048AF2999DADB8DA55769529"
+            }
+          ],
+          "activation_date": "2028-07-14",
+          "expiration_date": "2029-09-25",
+          "label_tags": [
+            {
+              "name": "APP",
+              "value": "AZURE"
+            },
+            {
+              "name": "ENV",
+              "value": "production"
+            },
+            {
+              "name": "lay",
+              "value": "2029"
+            }
+          ],
+          "tags": [
+            {
+              "name": "TAG-1",
+              "value": "AZURE-TAG"
+            }
+          ],
+          "created_at": "2023-06-05T11:33:54Z",
+          "updated_at": "2023-06-05T11:33:54Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
+          "referenced_keystores": [
+            {
+              "keystore": [
+                {
+                  "id": "2e124fa5-9ef6-406c-bb2f-9ad049ff1073",
+                  "name": "Azure Keystore",
+                  "type": "azure_key_vault",
+                  "href": "v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+                }
+              ]
+            }
+          ],
+          "instances": [
+            {
+              "id": "acb332dd-216c-44dd-8593-02bd2119ec62",
+              "label_in_keystore\"": "AZUREproduction2029",
+              "keystore": {
+                "group": "Production AZURE GB",
+                "type": "azure_key_vault"
+              },
+              "azure_key_protection_level": "software"
+            }
+          ],
+          "href": "/v4/managed_keys/35f690df-064a-4758-8694-b2f011810701",
+          "status_in_keystores": [
+            {
+              "keystore": [
+                {
+                  "id": "2e124fa5-9ef6-406c-bb2f-9ad049ff1073",
+                  "name": "Azure Keystore",
+                  "type": "azure_key_vault",
+                  "href": "v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+                }
+              ],
+              "status": "active",
+              "keystore_sync_flag": "ok",
+              "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+              "key_id_in_keystore": "d1e2525c-62c8-4df2-9173-69e1a7bc8cdb/d1e2525c-62c8-4df2-9173-69e1a7bc8cdb"
+            }
+          ]
+        },
+        {
+          "id": "ceb54688-827c-4e31-afa8-4c0122465a5b",
+          "vault": {
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "EXAMPLE-VAULT",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
+          },
+          "template": {
+            "id": "7a4e3659-083b-4d77-8562-7081eb197e90",
+            "name": "AWS-EXAMPLE-TEMPLATE",
+            "type": [
+              "user_defined"
+            ],
+            "href": "/v4/templates/7a4e3659-083b-4d77-8562-7081eb197e90"
+          },
+          "version": 1,
+          "description": "AWS key template description",
+          "label": "AWS-production-2029",
+          "state": "active",
+          "size": 256,
+          "algorithm": "aes",
+          "verification_patterns": [
+            {
+              "method\"": "ENC-ZERO",
+              "value": "C05CA1"
+            }
+          ],
+          "activation_date": "2028-07-14",
+          "expiration_date": "2029-09-25",
+          "label_tags": [
+            {
+              "name": "APP",
+              "value": "AWS"
+            },
+            {
+              "name": "ENV",
+              "value": "production"
+            },
+            {
+              "name": "lay",
+              "value": "2029"
+            }
+          ],
+          "tags": [
+            {
+              "name": "TAG-1",
+              "value": "AWS-TAG"
+            }
+          ],
+          "created_at": "2023-06-05T10:40:13Z",
+          "updated_at": "2023-06-05T10:40:19Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
+          "referenced_keystores": [
+            {
+              "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+              "name": "AWS KMS Keystore 335",
+              "type": "aws_kms",
+              "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+            }
+          ],
+          "instances": [
+            {
+              "id": "8c2bef79-dd15-477c-93f0-0ae62264d4b6",
+              "label_in_keystore": "AWS-production-2029",
+              "type": "secret_key",
+              "keystore": {
+                "group\"": "Production-AWS-DE",
+                "type\"": "aws_kms"
+              }
+            }
+          ],
+          "href": "/v4/managed_keys/ceb54688-827c-4e31-afa8-4c0122465a5b",
+          "status_in_keystores": [
+            {
+              "keystore": {
+                "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+                "name": "AWS KMS Keystore 335",
+                "type": "aws_kms",
+                "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+              },
+              "status": "active",
+              "keystore_sync_flag": "ok",
+              "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+              "key_id_in_keystore": "arn:aws:kms:eu-central-1:584492040385:key/52eca0ad-79ca-4c16-8934-986ac5d14b73"
+            }
+          ]
+        },
+        {
+          "id": "0beedc06-4608-48ae-8ae3-8b7bf3c2c39f",
+          "vault": {
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "Vault-2",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
+          },
+          "template": {
+            "id": "64f98479-392d-4af2-a076-77cc21b8c6f3",
+            "name": "IBM-CLOUD-TEMPLATE",
+            "type": [
+              "user_defined"
+            ],
+            "href": "/v4/templates/64f98479-392d-4af2-a076-77cc21b8c6f3"
+          },
+          "version": 1,
+          "description": "",
+          "label": "IBMCloudProduction2029",
+          "state": "active",
+          "size": "256",
+          "algorithm": "aes",
+          "verification_patterns": [
+            {
+              "method": "ENC-ZERO",
+              "value": "4ADDCB"
+            }
+          ],
+          "activation_date": "2028-07-14",
+          "expiration_date": "2029-09-25",
+          "label_tags": [
+            {
+              "name": "APP",
+              "value": "IBMCloud"
+            },
+            {
+              "name": "ENV",
+              "value": "Production"
+            },
+            {
+              "name": "lay",
+              "value": "2029"
+            }
+          ],
+          "tags": [
+            {
+              "name": "TAG-1",
+              "value": "AWS-TAG"
+            }
+          ],
+          "created_at": "2023-06-05T11:59:47Z",
+          "updated_at": "2023-06-05T11:59:47Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
+          "referenced_keystores": [
+            {
+              "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+              "name": "IBM CLOUD KEYSTORE",
+              "type": "ibm_cloud_kms",
+              "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+            }
+          ],
+          "instances": [
+            {
+              "id": "0c5b14ea-a3dd-407c-af7c-fd74575ccbad",
+              "label_in_keystore": "IBMCloudProduction2029",
+              "type": "secret_key",
+              "keystore": {
+                "group": "Production External GB",
+                "type": "ibm_cloud_kms"
+              }
+            }
+          ],
+          "href": "/v4/managed_keys/0beedc06-4608-48ae-8ae3-8b7bf3c2c39f",
+          "status_in_keystores": [
+            {
+              "keystore": {
+                "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+                "name": "IBM CLOUD KEYSTORE",
+                "type": "ibm_cloud_kms",
+                "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+              },
+              "status": "active",
+              "keystore_sync_flag": "ok",
+              "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+              "key_id_in_keystore": "804854d0-4eb7-416e-8ae2-45ba56921c8a/804854d0-4eb7-416e-8ae2-45ba56921c8a"
+            }
+          ]
+        },
+        {
+          "id": "d7b8204c-4f8f-4ba1-b306-5434ae817f51",
+          "vault": {
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "Vault-3",
+            "href": "v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
+          },
+          "template": {
+            "id": "09d229e5-e330-4e85-a7ee-cc8555d38603",
+            "name": "GOOGLE-TEMPLATE-86",
+            "type": [
+              "user_defined"
+            ],
+            "href": "/v4/templates/09d229e5-e330-4e85-a7ee-cc8555d38603"
+          },
+          "version": 1,
+          "description": "Google Key",
+          "label": "Google-Production-2029",
+          "state": "active",
+          "size": "256",
+          "algorithm": "aes",
+          "verification_patterns": [
+            {
+              "method\"": "ENC-ZERO",
+              "value": "C3F432"
+            }
+          ],
+          "activation_date": "2028-07-14",
+          "expiration_date": "2029-09-25",
+          "label_tags": [
+            {
+              "name": "APP",
+              "value": "Google"
+            },
+            {
+              "name": "ENV",
+              "value": "Production"
+            },
+            {
+              "name": "lay",
+              "value": "2029"
+            }
+          ],
+          "tags": [
+            {
+              "name": "TAG-1",
+              "value": "Google-TAG"
+            }
+          ],
+          "created_at": "2023-06-05T13:18:28",
+          "updated_at": "2023-06-05T13:18:28Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
+          "referenced_keystores": [
+            {
+              "id": "6e026faa-d44d-4a1a-aeea-0e1ef2840cba",
+              "name": "Google Keystore",
+              "type": "google_kms",
+              "href": "/v4/keystores/6e026faa-d44d-4a1a-aeea-0e1ef2840cba"
+            }
+          ],
+          "instances": [
+            {
+              "id": "ed74a984-2057-484c-9198-54839f3fec62",
+              "label_in_keystore": "Google-Production-2029",
+              "type": "secret_key",
+              "keystore": {
+                "group": "Production Google",
+                "type": "google_kms"
+              },
+              "google_key_protection_level": "software",
+              "google_key_purpose": "encrypt_decrypt",
+              "google_kms_algorithm": "google_symmetric_encryption"
+            }
+          ],
+          "href": "/v4/managed_keys/d7b8204c-4f8f-4ba1-b306-5434ae817f51",
+          "status_in_keystores": [
+            {
+              "keystore": {
+                "id": "6e026faa-d44d-4a1a-aeea-0e1ef2840cba",
+                "name": "Google Keystore",
+                "type": "google_kms",
+                "href": "/v4/keystores/6e026faa-d44d-4a1a-aeea-0e1ef2840cba"
+              },
+              "status": "active",
+              "keystore_sync_flag": "ok",
+              "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+              "key_id_in_keystore": "projects/plated-field-364019/locations/europe-west3/keyRings/uko-ring/cryptoKeys/ROBOT-Google-Key-05-06-nciYX/cryptoKeyVersions/1"
+            }
+          ]
+        }
+      ]
+    }
+    ```
+    {: screen}
 
 #### hpcs uko managed-key-ds
 {: #command-uko-key-distribution}
@@ -1298,7 +2174,7 @@ ibmcloud hpcs uko associated-resources-for-managed-key --id ID --uko-vault UKO-V
 Return the keystore distribution status for a managed key.
 
 ```
-ibmcloud hpcs uko managed-key-ds --id ID --uko-vault UKO-VAULT
+ibmcloud hpcs uko managed-key-ds --id ID
 ```
 
 - Command options
@@ -1306,20 +2182,22 @@ ibmcloud hpcs uko managed-key-ds --id ID --uko-vault UKO-VAULT
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
 
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
-
 - Example
 
     ```
     ibmcloud hpcs uko managed-key-ds \
       --id=21a7498e-2ae4-47ee-85ac-a19bf64e92fa \
-      --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
       --output json
     ```
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
 
@@ -1343,10 +2221,10 @@ ibmcloud hpcs uko managed-key-ds --id ID --uko-vault UKO-VAULT
 #### hpcs uko managed-key-update-from-template
 {: #command-uko-managed-key-update-from-template}
 
-Update a managed key to match the latest version of the associated key template. You can install, activate, or deactivate the key on target keystores in the group defined by the key template.
+Update a managed key to match the latest version of the associated key template. You can assign, activate, or deactivate the key on keystores in the group defined by the key template.
 
 ```
-ibmcloud hpcs uko managed-key-update-from-template --id ID --uko-vault UKO-VAULT --if-match IF-MATCH
+ibmcloud hpcs uko managed-key-update-from-template --id ID --if-match IF-MATCH [--dry-run DRY-RUN]
 ```
 
 - Command options
@@ -1354,18 +2232,17 @@ ibmcloud hpcs uko managed-key-update-from-template --id ID --uko-vault UKO-VAULT
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
 
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
-
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko managed-key` command to retrieve the ETag.
+
+    --dry-run (boolean)
+    : Optional. Do not create, update, or delete a resource, only verify and validate if resource can be created,updated, or deleted with given request successfully. The default value is false.
 
 - Example
 
     ```
     ibmcloud hpcs uko managed-key-update-from-template \
       --id=22c04c00-0687-4f10-b0ac-b9f01d68ee85 \
-      --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
       --if-match=2022-05-27T12:27:37Z \
       --output json
     ```
@@ -1373,58 +2250,103 @@ ibmcloud hpcs uko managed-key-update-from-template --id ID --uko-vault UKO-VAULT
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-27T12:29:46Z
     {
-      "id": "3dab42dc-6941-4841-8d27-4dabcc5aa09e",
+      "id": "ceb54688-827c-4e31-afa8-4c0122465a5b",
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "AWS-EXAMPLE-VAULT",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
       "template": {
-        "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-        "name": "IBM-CLOUD-EXAMPLE-TEMPLATE"
+        "id": "7a4e3659-083b-4d77-8562-7081eb197e90",
+        "name": "AWS-EXAMPLE-TEMPLATE",
+        "type": [
+          "user_defined"
+        ],
+        "href": "/v4/templates/7a4e3659-083b-4d77-8562-7081eb197e90"
       },
-      "description": "IBM CLOUD key template description",
-      "label": "IBM CLOUD KEY",
+      "version": 1,
+      "description": "AWS key template description",
+      "label": "AWS-production-2029",
       "state": "active",
-      "size": "256",
+      "size": 256,
       "algorithm": "aes",
       "verification_patterns": [
         {
-          "method": "enc-zero",
-          "value": "DDFA4A"
+          "method\"": "ENC-ZERO",
+          "value": "C05CA1"
         }
       ],
-      "activation_date": "2027-04-18",
-      "expiration_date": "2028-06-29",
+      "activation_date": "2028-07-14",
+      "expiration_date": "2029-09-25",
+      "label_tags": [
+        {
+          "name": "APP",
+          "value": "AWS"
+        },
+        {
+          "name": "ENV",
+          "value": "production"
+        },
+        {
+          "name": "lay",
+          "value": "2029"
+        }
+      ],
       "tags": [
         {
-          "name": "first-tag",
-          "value": "for-ibm"
+          "name": "TAG-1",
+          "value": "AWS-TAG"
         }
       ],
-      "created_at": "2022-03-09T11:26:01Z",
-      "updated_at": "2022-03-09T11:26:04Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
-      "referenced_keystores": [],
+      "created_at": "2023-06-05T10:40:13Z",
+      "updated_at": "2023-06-05T10:40:19Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
+      "referenced_keystores": [
+        {
+          "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+          "name": "AWS KMS Keystore 335",
+          "type": "aws_kms",
+          "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+        }
+      ],
       "instances": [
         {
-          "id": "ea7b6b27-d71b-4fe9-bbfe-309c7ca713a6",
-          "label_in_keystore": "IBM CLOUD KEY",
+          "id": "8c2bef79-dd15-477c-93f0-0ae62264d4b6",
+          "label_in_keystore": "AWS-production-2029",
           "type": "secret_key",
           "keystore": {
-            "group": "Production",
-            "type": "ibm_cloud_kms"
+            "group\"": "Production-AWS-DE",
+            "type\"": "aws_kms"
           }
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+      "href": "/v4/managed_keys/ceb54688-827c-4e31-afa8-4c0122465a5b",
+      "status_in_keystores": [
+        {
+          "keystore": {
+            "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+            "name": "AWS KMS Keystore 335",
+            "type": "aws_kms",
+            "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+          },
+          "status": "active",
+          "keystore_sync_flag": "ok",
+          "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+          "key_id_in_keystore": "arn:aws:kms:eu-central-1:584492040385:key/52eca0ad-79ca-4c16-8934-986ac5d14b73"
+        }
+      ]
     }
     ```
     {: screen}
@@ -1435,16 +2357,13 @@ ibmcloud hpcs uko managed-key-update-from-template --id ID --uko-vault UKO-VAULT
 Activate a managed key and perform key installation or activation operations on keystores in the keystore group associated with the managed key.
 
 ```
-ibmcloud hpcs uko managed-key-activate --id ID --uko-vault UKO-VAULT --if-match IF-MATCH
+ibmcloud hpcs uko managed-key-activate --id ID --if-match IF-MATCH
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
 
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko managed-key` command to retrieve the ETag.
@@ -1454,7 +2373,6 @@ ibmcloud hpcs uko managed-key-activate --id ID --uko-vault UKO-VAULT --if-match 
     ```
     ibmcloud hpcs uko managed-key-activate \
       --id=21a7498e-2ae4-47ee-85ac-a19bf64e92fa \
-      --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
       --if-match=2022-05-27T10:06:27Z \
       --output json
     ```
@@ -1462,58 +2380,103 @@ ibmcloud hpcs uko managed-key-activate --id ID --uko-vault UKO-VAULT --if-match 
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-27T10:11:06Z
     {
-      "id": "3dab42dc-6941-4841-8d27-4dabcc5aa09e",
+      "id": "ceb54688-827c-4e31-afa8-4c0122465a5b",
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "AWS-EXAMPLE-VAULT",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
       "template": {
-        "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-        "name": "IBM-CLOUD-EXAMPLE-TEMPLATE"
+        "id": "7a4e3659-083b-4d77-8562-7081eb197e90",
+        "name": "AWS-EXAMPLE-TEMPLATE",
+        "type": [
+          "user_defined"
+        ],
+        "href": "/v4/templates/7a4e3659-083b-4d77-8562-7081eb197e90"
       },
-      "description": "IBM CLOUD key template description",
-      "label": "IBM CLOUD KEY",
+      "version": 1,
+      "description": "AWS key template description",
+      "label": "AWS-production-2029",
       "state": "active",
-      "size": "256",
+      "size": 256,
       "algorithm": "aes",
       "verification_patterns": [
         {
-          "method": "enc-zero",
-          "value": "DDFA4A"
+          "method\"": "ENC-ZERO",
+          "value": "C05CA1"
         }
       ],
-      "activation_date": "2027-04-18",
-      "expiration_date": "2028-06-29",
+      "activation_date": "2028-07-14",
+      "expiration_date": "2029-09-25",
+      "label_tags": [
+        {
+          "name": "APP",
+          "value": "AWS"
+        },
+        {
+          "name": "ENV",
+          "value": "production"
+        },
+        {
+          "name": "lay",
+          "value": "2029"
+        }
+      ],
       "tags": [
         {
-          "name": "first-tag",
-          "value": "for-ibm"
+          "name": "TAG-1",
+          "value": "AWS-TAG"
         }
       ],
-      "created_at": "2022-03-09T11:26:01Z",
-      "updated_at": "2022-03-09T11:26:04Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
-      "referenced_keystores": [],
+      "created_at": "2023-06-05T10:40:13Z",
+      "updated_at": "2023-06-05T10:40:19Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
+      "referenced_keystores": [
+        {
+          "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+          "name": "AWS KMS Keystore 335",
+          "type": "aws_kms",
+          "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+        }
+      ],
       "instances": [
         {
-          "id": "ea7b6b27-d71b-4fe9-bbfe-309c7ca713a6",
-          "label_in_keystore": "IBM CLOUD KEY",
+          "id": "8c2bef79-dd15-477c-93f0-0ae62264d4b6",
+          "label_in_keystore": "AWS-production-2029",
           "type": "secret_key",
           "keystore": {
-            "group": "Production",
-            "type": "ibm_cloud_kms"
+            "group\"": "Production-AWS-DE",
+            "type\"": "aws_kms"
           }
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+      "href": "/v4/managed_keys/ceb54688-827c-4e31-afa8-4c0122465a5b",
+      "status_in_keystores": [
+        {
+          "keystore": {
+            "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+            "name": "AWS KMS Keystore 335",
+            "type": "aws_kms",
+            "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+          },
+          "status": "active",
+          "keystore_sync_flag": "ok",
+          "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+          "key_id_in_keystore": "arn:aws:kms:eu-central-1:584492040385:key/52eca0ad-79ca-4c16-8934-986ac5d14b73"
+        }
+      ]
     }
     ```
     {: screen}
@@ -1524,16 +2487,13 @@ ibmcloud hpcs uko managed-key-activate --id ID --uko-vault UKO-VAULT --if-match 
 Deactivate a managed key and perform key deactivation operations on keystores in the keystore group associated with the managed key.
 
 ```
-ibmcloud hpcs uko managed-key-deactivate --id ID --uko-vault UKO-VAULT --if-match IF-MATCH
+ibmcloud hpcs uko managed-key-deactivate --id ID --if-match IF-MATCH
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
 
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko managed-key` command to retrieve the ETag.
@@ -1543,7 +2503,6 @@ ibmcloud hpcs uko managed-key-deactivate --id ID --uko-vault UKO-VAULT --if-matc
     ```
     ibmcloud hpcs uko managed-key-deactivate \
       --id=21a7498e-2ae4-47ee-85ac-a19bf64e92fa \
-      --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
       --if-match=2022-05-27T10:13:31Z \
       --output json
     ```
@@ -1551,58 +2510,103 @@ ibmcloud hpcs uko managed-key-deactivate --id ID --uko-vault UKO-VAULT --if-matc
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-27T10:14:13Z
     {
-      "id": "3dab42dc-6941-4841-8d27-4dabcc5aa09e",
+      "id": "ceb54688-827c-4e31-afa8-4c0122465a5b",
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "AWS-EXAMPLE-VAULT",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
       "template": {
-        "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-        "name": "IBM-CLOUD-EXAMPLE-TEMPLATE"
+        "id": "7a4e3659-083b-4d77-8562-7081eb197e90",
+        "name": "AWS-EXAMPLE-TEMPLATE",
+        "type": [
+          "user_defined"
+        ],
+        "href": "/v4/templates/7a4e3659-083b-4d77-8562-7081eb197e90"
       },
-      "description": "IBM CLOUD key template description",
-      "label": "IBM CLOUD KEY",
+      "version": 1,
+      "description": "AWS key template description",
+      "label": "AWS-production-2029",
       "state": "active",
-      "size": "256",
+      "size": 256,
       "algorithm": "aes",
       "verification_patterns": [
         {
-          "method": "enc-zero",
-          "value": "DDFA4A"
+          "method\"": "ENC-ZERO",
+          "value": "C05CA1"
         }
       ],
-      "activation_date": "2027-04-18",
-      "expiration_date": "2028-06-29",
+      "activation_date": "2028-07-14",
+      "expiration_date": "2029-09-25",
+      "label_tags": [
+        {
+          "name": "APP",
+          "value": "AWS"
+        },
+        {
+          "name": "ENV",
+          "value": "production"
+        },
+        {
+          "name": "lay",
+          "value": "2029"
+        }
+      ],
       "tags": [
         {
-          "name": "first-tag",
-          "value": "for-ibm"
+          "name": "TAG-1",
+          "value": "AWS-TAG"
         }
       ],
-      "created_at": "2022-03-09T11:26:01Z",
-      "updated_at": "2022-03-09T11:26:04Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
-      "referenced_keystores": [],
+      "created_at": "2023-06-05T10:40:13Z",
+      "updated_at": "2023-06-05T10:40:19Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
+      "referenced_keystores": [
+        {
+          "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+          "name": "AWS KMS Keystore 335",
+          "type": "aws_kms",
+          "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+        }
+      ],
       "instances": [
         {
-          "id": "ea7b6b27-d71b-4fe9-bbfe-309c7ca713a6",
-          "label_in_keystore": "IBM CLOUD KEY",
+          "id": "8c2bef79-dd15-477c-93f0-0ae62264d4b6",
+          "label_in_keystore": "AWS-production-2029",
           "type": "secret_key",
           "keystore": {
-            "group": "Production",
-            "type": "ibm_cloud_kms"
+            "group\"": "Production-AWS-DE",
+            "type\"": "aws_kms"
           }
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+      "href": "/v4/managed_keys/ceb54688-827c-4e31-afa8-4c0122465a5b",
+      "status_in_keystores": [
+        {
+          "keystore": {
+            "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+            "name": "AWS KMS Keystore 335",
+            "type": "aws_kms",
+            "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+          },
+          "status": "active",
+          "keystore_sync_flag": "ok",
+          "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+          "key_id_in_keystore": "arn:aws:kms:eu-central-1:584492040385:key/52eca0ad-79ca-4c16-8934-986ac5d14b73"
+        }
+      ]
     }
     ```
     {: screen}
@@ -1613,16 +2617,13 @@ ibmcloud hpcs uko managed-key-deactivate --id ID --uko-vault UKO-VAULT --if-matc
 Destroy a managed key and perform key destruction operations on keystores in the keystore group associated with the managed key. This operation cannot be undone. Make sure that the managed key is in a `deactivated` state before you run this command.
 
 ```
-ibmcloud hpcs uko managed-key-destroy --id ID --uko-vault UKO-VAULT --if-match IF-MATCH
+ibmcloud hpcs uko managed-key-destroy --id ID --if-match IF-MATCH
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
 
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko managed-key` command to retrieve the ETag.
@@ -1632,7 +2633,6 @@ ibmcloud hpcs uko managed-key-destroy --id ID --uko-vault UKO-VAULT --if-match I
     ```
     ibmcloud hpcs uko managed-key-destroy \
       --id=21a7498e-2ae4-47ee-85ac-a19bf64e92fa \
-      --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
       --if-match=2022-05-27T10:14:13Z \
       --output json
     ```
@@ -1640,58 +2640,103 @@ ibmcloud hpcs uko managed-key-destroy --id ID --uko-vault UKO-VAULT --if-match I
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-27T10:15:38Z
     {
-      "id": "3dab42dc-6941-4841-8d27-4dabcc5aa09e",
+      "id": "ceb54688-827c-4e31-afa8-4c0122465a5b",
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "AWS-EXAMPLE-VAULT",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
       "template": {
-        "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-        "name": "IBM-CLOUD-EXAMPLE-TEMPLATE"
+        "id": "7a4e3659-083b-4d77-8562-7081eb197e90",
+        "name": "AWS-EXAMPLE-TEMPLATE",
+        "type": [
+          "user_defined"
+        ],
+        "href": "/v4/templates/7a4e3659-083b-4d77-8562-7081eb197e90"
       },
-      "description": "IBM CLOUD key template description",
-      "label": "IBM CLOUD KEY",
+      "version": 1,
+      "description": "AWS key template description",
+      "label": "AWS-production-2029",
       "state": "active",
-      "size": "256",
+      "size": 256,
       "algorithm": "aes",
       "verification_patterns": [
         {
-          "method": "enc-zero",
-          "value": "DDFA4A"
+          "method\"": "ENC-ZERO",
+          "value": "C05CA1"
         }
       ],
-      "activation_date": "2027-04-18",
-      "expiration_date": "2028-06-29",
+      "activation_date": "2028-07-14",
+      "expiration_date": "2029-09-25",
+      "label_tags": [
+        {
+          "name": "APP",
+          "value": "AWS"
+        },
+        {
+          "name": "ENV",
+          "value": "production"
+        },
+        {
+          "name": "lay",
+          "value": "2029"
+        }
+      ],
       "tags": [
         {
-          "name": "first-tag",
-          "value": "for-ibm"
+          "name": "TAG-1",
+          "value": "AWS-TAG"
         }
       ],
-      "created_at": "2022-03-09T11:26:01Z",
-      "updated_at": "2022-03-09T11:26:04Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
-      "referenced_keystores": [],
+      "created_at": "2023-06-05T10:40:13Z",
+      "updated_at": "2023-06-05T10:40:19Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
+      "referenced_keystores": [
+        {
+          "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+          "name": "AWS KMS Keystore 335",
+          "type": "aws_kms",
+          "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+        }
+      ],
       "instances": [
         {
-          "id": "ea7b6b27-d71b-4fe9-bbfe-309c7ca713a6",
-          "label_in_keystore": "IBM CLOUD KEY",
+          "id": "8c2bef79-dd15-477c-93f0-0ae62264d4b6",
+          "label_in_keystore": "AWS-production-2029",
           "type": "secret_key",
           "keystore": {
-            "group": "Production",
-            "type": "ibm_cloud_kms"
+            "group\"": "Production-AWS-DE",
+            "type\"": "aws_kms"
           }
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
+      "href": "/v4/managed_keys/ceb54688-827c-4e31-afa8-4c0122465a5b",
+      "status_in_keystores": [
+        {
+          "keystore": {
+            "id": "0743ae15-c594-476d-8e9a-1564740ace53",
+            "name": "AWS KMS Keystore 335",
+            "type": "aws_kms",
+            "href": "/v4/keystores/0743ae15-c594-476d-8e9a-1564740ace53"
+          },
+          "status": "active",
+          "keystore_sync_flag": "ok",
+          "keystore_sync_flag_detail": "active_key_is_active_in_keystore",
+          "key_id_in_keystore": "arn:aws:kms:eu-central-1:584492040385:key/52eca0ad-79ca-4c16-8934-986ac5d14b73"
+        }
+      ]
     }
     ```
     {: screen}
@@ -1699,19 +2744,16 @@ ibmcloud hpcs uko managed-key-destroy --id ID --uko-vault UKO-VAULT --if-match I
 #### hpcs uko managed-key-sync
 {: #command-uko-key-sync}
 
-Sync a managed key in keystores.
+Perform the synchronization operation on a managed key to align the states in the associated keystores.
 
 ```
-ibmcloud hpcs uko managed-key-sync --id ID --uko-vault UKO-VAULT --if-match IF-MATCH
+ibmcloud hpcs uko managed-key-sync --id ID --if-match IF-MATCH
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the key. You can use the `ibmcloud hpcs uko managed-keys` command to retrieve the key UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
 
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko managed-key` command to retrieve the ETag.
@@ -1721,13 +2763,18 @@ ibmcloud hpcs uko managed-key-sync --id ID --uko-vault UKO-VAULT --if-match IF-M
     ```
     ibmcloud hpcs uko managed-key-sync \
         --id=b28bf13d-f49d-4b00-8b8d-457d38ad1e15 \
-        --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
         --if-match=2022-05-27T10:14:13Z \
         --output json
     ```
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
 
@@ -1757,16 +2804,61 @@ If the `--all-pages` option is not set, the command only retrieves a single page
 {: note}
 
 ```
-ibmcloud hpcs uko key-templates [--vault-id VAULT-ID] [--key-algorithm KEY-ALGORITHM] [--sort SORT] [--limit LIMIT] [--offset OFFSET]
+ibmcloud hpcs uko key-templates [--name NAME] [--naming-scheme NAME-SCHEME] [--vault-id VAULT-ID] [--key-algorithm KEY-ALGORITHM] [--key-size KEY-SIZE] [--key-size-min KEY-SIZE-MIN] [--key-size-max KEY-SIZE-MAX] [--keystores-type KEYSTORES-TYPE] [--keystores-group KEYSTORES-GROUP] [--created-at CREATED-AT] [--created-at-min CREATED-AT-MIN] [--created-at-max CREATED-AT-MAX] [--updated-at UPDATED-AT] [--updated-at-min UPDATED-AT-MIN] [--updated-at-max UPDATED-AT-MAX] [--type TYPE] [--state STATE] [--sort SORT] [--limit LIMIT] [--offset OFFSET] [--managing-systems MANAGING-SYSTEMS]
 ```
 
 - Command options
+
+    --name (string)
+    :   Optional. Return only templates whose name begin with the string.
+
+    --naming-scheme (string)
+    :   Optional. Return only templates whose naming scheme contains the string.
 
     --vault-id (string)
     :   Optional. The UUID of the vault. The length must be 36 characters. The value must match the regular expression `/^[-0-9a-z]+$/`.
 
     --key-algorithm (string)
-    :   Optional. The algorithm of the returned key templates. Values that can be set are `aes`, `rsa`, `hmac`, and `ec`.
+    :   Optional. The algorithm of the returned key templates. Values that can be set are `aes`, `rsa`, `hmac`, `ec`, `des`, and `dilithium`.
+
+    --key-size (string)
+    :   Optional. The size of the key
+
+    --key-size-min (string)
+    :   Optional. The minimum size of the key. This query parameter cannot be used in conjunction with the `key-size` query parameter.
+
+    --key-size-max (string)
+    :   Optional. The maximum size of the key. This query parameter cannot be used in conjunction with the `key-size` query parameter.
+
+    --keystores-type ([]string)
+    :   Optional. Type of referenced keystore. Values that can be set are `aws_kms`, `azure_key_vault`, `ibm_cloud_kms`, `google_kms`, and `cca`.
+
+    --keystores-group ([]string)
+    :   Optional. Group of referenced keystore.
+
+    --created-at (string)
+    :   Optional. Return only managed keys whose creation time matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --created-at-min (string)
+    :   Optional. Return only managed keys whose creation time is at or after the parameter value. This query parameter cannot be used in conjunction with the `created_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --created-at-max (string)
+    :   Optional. Return only managed keys whose creation time is at or before the parameter value. This query parameter cannot be used in conjunction with the `created_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --updated-at (string)
+    :   Optional. Return only managed keys whose update time matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --updated-at-min (string)
+    :   Optional. Return only managed keys whose update time is after the parameter value. This query parameter cannot be used in conjunction with the `updated_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --updated-at-max (string)
+    :   Optional. Return only managed keys whose update time is before the parameter value. This query parameter cannot be used in conjunction with the `updated_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
+
+    --type ([]string)
+    :   Optional. The types of returned templates. Values can be set are `user_defined`, `shadow`, and `system`.
+
+    --state ([]string)
+    :   Optional. Return only template whose state contains the string. Values can be set are `archived` or `unarchived`.
 
     --sort ([]string)
     :   Optional. The sorting order. The default value is `["-updated_at"]`. The list items must match the regular expression `/^-?[a-z0-9_.\\[\\],-]+$/`.
@@ -1777,8 +2869,8 @@ ibmcloud hpcs uko key-templates [--vault-id VAULT-ID] [--key-algorithm KEY-ALGOR
     --offset (int64)
     :   Optional. The number of keys to skip. The minimum value is `0`.
 
-    --all-pages (bool)
-    :   Invoke multiple requests to display all pages of the collection for key templates.
+    --managing-systems
+    :   Return only managed keys with the given managing systems. Values that can be set are `web` and `workstation`.
 
 - Example
 
@@ -1788,6 +2880,12 @@ ibmcloud hpcs uko key-templates [--vault-id VAULT-ID] [--key-algorithm KEY-ALGOR
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
 
@@ -1805,13 +2903,19 @@ ibmcloud hpcs uko key-templates [--vault-id VAULT-ID] [--key-algorithm KEY-ALGOR
       "templates": [
         {
           "vault": {
-            "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-            "name": "Test Vault Name",
-            "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "VAULT 391",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
           },
-          "id": "2014f3ba-87ea-4125-aa9f-95141ede04cf",
-          "version": 0,
-          "name": "AWS-KMS-TEMPLATE",
+          "id": "91caa113-d3ba-4620-a252-1c27aa31fd4e",
+          "version": "0",
+          "name": "AWS-TEMPLATE-229",
+          "naming_scheme": "<APP>-AES256-<ENV>-<GROUP>-<lay>",
+          "type": [
+            "user_defined"
+          ],
+          "state": "unarchived",
+          "keys_count": "0",
           "key": {
             "size": "256",
             "algorithm": "aes",
@@ -1819,28 +2923,34 @@ ibmcloud hpcs uko key-templates [--vault-id VAULT-ID] [--key-algorithm KEY-ALGOR
             "expiration_date": "P1Y2M1W4D",
             "state": "active"
           },
-          "description": "AWS KMS key template description",
-          "created_at": "2022-03-09T11:00:53Z",
-          "updated_at": "2022-03-09T11:00:53Z",
-          "created_by": "IBMid-1308197YB4",
-          "updated_by": "IBMid-1308197YB4",
+          "description": "AWS KMS KEY TEMPLATE",
+          "created_at": "2023-06-05T14:16:07Z",
+          "updated_at": "2023-06-05T14:16:07Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
           "keystores": [
             {
-              "group": "Production",
+              "group": "Production-AWS-DE",
               "type": "aws_kms"
             }
           ],
-          "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/templates/2014f3ba-87ea-4125-aa9f-95141ede04cf"
+          "href": "v4/templates/91caa113-d3ba-4620-a252-1c27aa31fd4e"
         },
         {
           "vault": {
-            "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-            "name": "Test Vault Name",
-            "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "Vault 391",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
           },
-          "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-          "version": 0,
-          "name": "IBM-CLOUD-EXAMPLE-TEMPLATE",
+          "id": "64f98479-392d-4af2-a076-77cc21b8c6f3",
+          "version": "0",
+          "name": "IBM-template-371",
+          "naming_scheme": "IBMCloud<APP><ENV><lay>",
+          "type": [
+            "user_defined"
+          ],
+          "state": "unarchived",
+          "keys_count": "0",
           "key": {
             "size": "256",
             "algorithm": "aes",
@@ -1849,27 +2959,33 @@ ibmcloud hpcs uko key-templates [--vault-id VAULT-ID] [--key-algorithm KEY-ALGOR
             "state": "active"
           },
           "description": "IBM CLOUD key template description",
-          "created_at": "2022-03-09T11:00:47Z",
-          "updated_at": "2022-03-09T11:00:47Z",
-          "created_by": "IBMid-1308197YB4",
-          "updated_by": "IBMid-1308197YB4",
+          "created_at": "2023-06-05T11:59:08Z",
+          "updated_at": "2023-06-05T11:59:08Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
           "keystores": [
             {
-              "group": "Production",
+              "group": "Production External GB",
               "type": "ibm_cloud_kms"
             }
           ],
-          "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/templates/93777bca-baef-4070-b9b5-a2e6079df1b4"
+          "href": "/v4/templates/64f98479-392d-4af2-a076-77cc21b8c6f3"
         },
         {
           "vault": {
-            "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-            "name": "Test Vault Name",
-            "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "Vault 391",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
           },
-          "id": "4411f1ae-62cc-484e-9910-65d2e8f258bb",
-          "version": 0,
-          "name": "AZURE-EXAMPLE-TEMPLATE",
+          "id": "6393e930-562c-4042-b324-45c37d3d49d9",
+          "version": "0",
+          "name": "AZURE-TEMPLATE-920",
+          "naming_scheme": "<APP><ENV><lay>",
+          "type": [
+            "user_defined"
+          ],
+          "state": "unarchived",
+          "keys_count": "0",
           "key": {
             "size": "2048",
             "algorithm": "rsa",
@@ -1877,18 +2993,57 @@ ibmcloud hpcs uko key-templates [--vault-id VAULT-ID] [--key-algorithm KEY-ALGOR
             "expiration_date": "P1Y2M1W4D",
             "state": "active"
           },
-          "description": "AZURE key description",
-          "created_at": "2022-03-09T11:00:40Z",
-          "updated_at": "2022-03-09T11:00:40Z",
-          "created_by": "IBMid-1308197YB4",
-          "updated_by": "IBMid-1308197YB4",
+          "description": "AZURE MANAGED KEY",
+          "created_at": "2023-06-05T11:33:24Z",
+          "updated_at": "2023-06-05T11:33:24Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
           "keystores": [
             {
-              "group": "Production",
-              "type": "azure_key_vault"
+              "group": "Production AZURE GB",
+              "type": "azure_key_vault",
+              "azure_key_protection_level": "software"
             }
           ],
-          "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/templates/4411f1ae-62cc-484e-9910-65d2e8f258bb"
+          "href": "/v4/templates/6393e930-562c-4042-b324-45c37d3d49d9"
+        },
+        {
+          "vault": {
+            "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+            "name": "Vault 391",
+            "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
+          },
+          "id": "09d229e5-e330-4e85-a7ee-cc8555d38603",
+          "version": "0",
+          "name": "GOOGLE-TEMPLATE-86",
+          "naming_scheme": "<APP>-<ENV>-<lay>",
+          "type": [
+            "user_defined"
+          ],
+          "state": "unarchived",
+          "keys_count": "0",
+          "key": {
+            "size": "256",
+            "algorithm": "aes",
+            "activation_date": "P5Y1M1W2D",
+            "expiration_date": "P1Y2M1W4D",
+            "state": "active"
+          },
+          "description": "Google Key Template",
+          "created_at": "2023-06-05T13:17:01Z",
+          "updated_at": "2023-06-05T13:17:01Z",
+          "created_by": "IBMid-665000MCAR",
+          "updated_by": "IBMid-665000MCAR",
+          "keystores": [
+            {
+              "group": "Production Google",
+              "type": "google_kms",
+              "google_key_protection_level": "software",
+              "google_key_purpose": "encrypt_decrypt",
+              "google_kms_algorithm": "google_symmetric_encryption"
+            }
+          ],
+          "href": "/v4/templates/09d229e5-e330-4e85-a7ee-cc8555d38603"
         }
       ]
     }
@@ -1901,13 +3056,10 @@ ibmcloud hpcs uko key-templates [--vault-id VAULT-ID] [--key-algorithm KEY-ALGOR
 Create a new key template. Key templates are used to combine information that is necessary for creating a key. With key templates, you can easily create subsequent keys without specifying any details.
 
 ```
-ibmcloud hpcs uko key-template-create --uko-vault UKO-VAULT --vault VAULT --name NAME --key KEY --keystores KEYSTORES [--description DESCRIPTION]
+ibmcloud hpcs uko key-template-create --vault VAULT --name NAME --type TYPE --state STATE --naming-scheme NAMEING-SCHEME --key KEY --keystores KEYSTORES [--description DESCRIPTION]
 ```
 
 - Command options
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko key-templates` command to retrieve the UUID.
 
     --vault ([VaultReferenceInCreationRequest](#uko-vault-reference-in-creation-request-example-schema))
     :   Required. The ID of the vault where the key template is to be created.
@@ -1915,11 +3067,20 @@ ibmcloud hpcs uko key-template-create --uko-vault UKO-VAULT --vault VAULT --name
     --name (string)
     :   Required. The name of the template. You need to reference it when creating managed keys. The length must be between 1 and 30 characters. The value must match the regular expression `/^[A-Za-z][A-Za-z0-9-]*$/`.
 
+    --type (string[])
+    :   Required. The type of the template. Values that can be set are `user_defined`, `shadow`, and `system`.
+
+    --state (string)
+    :   Required. The state of the template. Values can be set are `archived` or `unarchived`.
+
+    --naming-scheme (string)
+    :   Required. The string pattern that your template name needs to follow.
+
     --key ([KeyProperties](#uko-key-properties-example-schema))
     :   Required. Properties that describe the managed key.
 
     --keystores ([KeystoresPropertiesCreate\[\]](#uko-keystores-properties-create-example-schema))
-    :   Required. An array describing the type and group of target keystores that the managed key is to be installed in. The maximum length is `1` item. The minimum length is `1` item. 
+    :   Required. An array describing the type and group of keystores that the managed key is to be installed in. The maximum length is `1` item. The minimum length is `1` item. 
     
     --description (string)
     :   Optional. The description of the key template. The length must be between 0 and 200 characters. The value must match the regular expression `/(.|\\n)*/`.
@@ -1928,11 +3089,13 @@ ibmcloud hpcs uko key-template-create --uko-vault UKO-VAULT --vault VAULT --name
 
     ```
     ibmcloud hpcs uko key-template-create \
-        --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
         --vault='{"id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b"}' \
         --name=IBM-CLOUD-EXAMPLE-TEMPLATE \
         --key='{"size": "256", "algorithm": "aes", "activation_date": "P5Y1M1W2D", "expiration_date": "P1Y2M1W4D", "state": "active"}' \
         --keystores='[{"group": "Production", "type": "ibm_cloud_kms"}]' \
+        --state="unarchived" \
+        --naming-scheme="A-<APP>-AES256-<ENV>-<GROUP>" \
+        --type="user_defined" \
         --description="IBM CLOUD key template description" \
         --output json
     ```
@@ -1940,20 +3103,32 @@ ibmcloud hpcs uko key-template-create --uko-vault UKO-VAULT --vault VAULT --name
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | Location | String | Path to newly created resource, relative to context root. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-20T15:13:37Z
     {
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "VAULT 391",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
-      "id": "ada4293c-07ed-4903-b3ee-419bd1a05fde",
-      "version": 0,
-      "name": "IBM-CLOUD-EXAMPLE-TEMPLATE",
+      "id": "91caa113-d3ba-4620-a252-1c27aa31fd4e",
+      "version": "0",
+      "name": "AWS-TEMPLATE-229",
+      "naming_scheme": "<APP>-AES256-<ENV>-<GROUP>-<lay>",
+      "type": [
+        "user_defined"
+      ],
+      "state": "unarchived",
+      "keys_count": "0",
       "key": {
         "size": "256",
         "algorithm": "aes",
@@ -1961,18 +3136,18 @@ ibmcloud hpcs uko key-template-create --uko-vault UKO-VAULT --vault VAULT --name
         "expiration_date": "P1Y2M1W4D",
         "state": "active"
       },
-      "description": "IBM CLOUD key template description",
-      "created_at": "2022-03-09T15:40:52Z",
-      "updated_at": "2022-03-09T15:40:52Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
+      "description": "AWS KMS KEY TEMPLATE",
+      "created_at": "2023-06-05T14:16:07Z",
+      "updated_at": "2023-06-05T14:16:07Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
       "keystores": [
         {
-          "group": "Production",
-          "type": "ibm_cloud_kms"
+          "group": "Production-AWS-DE",
+          "type": "aws_kms"
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/templates/ada4293c-07ed-4903-b3ee-419bd1a05fde"
+      "href": "v4/templates/91caa113-d3ba-4620-a252-1c27aa31fd4e"
     }
     ```
     {: screen}
@@ -1983,16 +3158,13 @@ ibmcloud hpcs uko key-template-create --uko-vault UKO-VAULT --vault VAULT --name
 Delete a key template from the vault. Make sure that no managed key is associated with the key template before you run this command.
 
 ```
-ibmcloud hpcs uko key-template-delete --id ID --uko-vault UKO-VAULT --if-match IF-MATCH
+ibmcloud hpcs uko key-template-delete --id ID --if-match IF-MATCH
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the template. You can use the `ibmcloud hpcs uko key-templates` command to retrieve the UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko key-templates` command to retrieve the UUID.
 
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko key-template` command to retrieve the ETag.
@@ -2002,14 +3174,19 @@ ibmcloud hpcs uko key-template-delete --id ID --uko-vault UKO-VAULT --if-match I
     ```
     ibmcloud hpcs uko key-template-delete \
         --id=07b62c12-75a2-46c9-9259-0cecde3985d2 \
-        --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
         --if-match=2022-05-11T14:58:26Z
     ```
     {: pre}
 
 - Output
 
-    The command returns the output similar to the following   example:
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+
+    The command returns the output similar to the following example:
 
     ```
     ...
@@ -2023,7 +3200,7 @@ ibmcloud hpcs uko key-template-delete --id ID --uko-vault UKO-VAULT --if-match I
 Retrieve a key template and its details by specifying the ID.
 
 ```
-ibmcloud hpcs uko key-template --id ID --uko-vault UKO-VAULT
+ibmcloud hpcs uko key-template --id ID
 ```
 
 - Command options
@@ -2031,35 +3208,42 @@ ibmcloud hpcs uko key-template --id ID --uko-vault UKO-VAULT
     --id (string)
     :   Required. The UUID of the template. You can use the `ibmcloud hpcs uko key-templates` command to retrieve the UUID.
 
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko key-templates` command to retrieve the UUID.
-
 - Example
 
     ```
     ibmcloud hpcs uko key-template \
         --id=07b62c12-75a2-46c9-9259-0cecde3985d2 \
-        --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
         --output json
     ```
     {: pre}
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-20T15:13:37Z
     {
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "VAULT 391",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
-      "id": "ada4293c-07ed-4903-b3ee-419bd1a05fde",
-      "version": 0,
-      "name": "IBM-CLOUD-EXAMPLE-TEMPLATE",
+      "id": "91caa113-d3ba-4620-a252-1c27aa31fd4e",
+      "version": "0",
+      "name": "AWS-TEMPLATE-229",
+      "naming_scheme": "<APP>-AES256-<ENV>-<GROUP>-<lay>",
+      "type": [
+        "user_defined"
+      ],
+      "state": "unarchived",
+      "keys_count": "0",
       "key": {
         "size": "256",
         "algorithm": "aes",
@@ -2067,18 +3251,18 @@ ibmcloud hpcs uko key-template --id ID --uko-vault UKO-VAULT
         "expiration_date": "P1Y2M1W4D",
         "state": "active"
       },
-      "description": "IBM CLOUD key template description",
-      "created_at": "2022-03-09T15:40:52Z",
-      "updated_at": "2022-03-09T15:40:52Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
+      "description": "AWS KMS KEY TEMPLATE",
+      "created_at": "2023-06-05T14:16:07Z",
+      "updated_at": "2023-06-05T14:16:07Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
       "keystores": [
         {
-          "group": "Production",
-          "type": "ibm_cloud_kms"
+          "group": "Production-AWS-DE",
+          "type": "aws_kms"
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/templates/ada4293c-07ed-4903-b3ee-419bd1a05fde"
+      "href": "v4/templates/91caa113-d3ba-4620-a252-1c27aa31fd4e"
     }
     ```
     {: screen}
@@ -2089,7 +3273,7 @@ ibmcloud hpcs uko key-template --id ID --uko-vault UKO-VAULT
 Update attributes of a key template.
 
 ```
-ibmcloud hpcs uko key-template-update --id ID --uko-vault UKO-VAULT --if-match IF-MATCH [--keystores KEYSTORES] [--description DESCRIPTION] [--key KEY]
+ibmcloud hpcs uko key-template-update --id ID --if-match IF-MATCH [--keystores KEYSTORES] [--name NAME] [--description DESCRIPTION] [--key KEY]
 ```
 
 - Command options
@@ -2097,14 +3281,14 @@ ibmcloud hpcs uko key-template-update --id ID --uko-vault UKO-VAULT --if-match I
     --id (string)
     :   Required. The UUID of the template. You can use the `ibmcloud hpcs uko key-templates` command to retrieve the UUID.
 
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko key-templates` command to retrieve the UUID.
-
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko key-template` command to retrieve the ETag.
 
+    --name (string)
+    :   Optional. The updated template name.
+
     --keystores ([KeystoresPropertiesUpdate\[\]](#uko-keystores-properties-update-example-schema))
-    :   Optional. An array describing the type and group of target keystores where the managed key is to be installed. The maximum length is `1` item. The minimum length is `1` item.
+    :   Optional. An array describing the type and group of keystores where the managed key is to be installed. The maximum length is `1` item. The minimum length is `1` item.
     
     --description (string)
     :   Optional. The updated description of the key template. The length must be between 0 and 200 characters. The value must match the regular expression `/(.|\\n)*/`.
@@ -2117,7 +3301,6 @@ ibmcloud hpcs uko key-template-update --id ID --uko-vault UKO-VAULT --if-match I
     ```
     ibmcloud hpcs uko key-template-update \
       --id=07b62c12-75a2-46c9-9259-0cecde3985d2 \
-      --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
       --if-match=2022-05-11T14:58:26Z \
       --description="The update of the template" \
       --output json
@@ -2126,20 +3309,31 @@ ibmcloud hpcs uko key-template-update --id ID --uko-vault UKO-VAULT --if-match I
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-20T15:20:06Z
     {
       "vault": {
-        "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-        "name": "Test Vault Name",
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+        "id": "1d3b402a-ce40-4b17-b6f0-a7fa26ba72de",
+        "name": "VAULT 391",
+        "href": "/v4/vaults/1d3b402a-ce40-4b17-b6f0-a7fa26ba72de"
       },
-      "id": "ada4293c-07ed-4903-b3ee-419bd1a05fde",
-      "version": 0,
-      "name": "IBM-CLOUD-EXAMPLE-TEMPLATE",
+      "id": "91caa113-d3ba-4620-a252-1c27aa31fd4e",
+      "version": "0",
+      "name": "AWS-TEMPLATE-229",
+      "naming_scheme": "<APP>-AES256-<ENV>-<GROUP>-<lay>",
+      "type": [
+        "user_defined"
+      ],
+      "state": "unarchived",
+      "keys_count": "0",
       "key": {
         "size": "256",
         "algorithm": "aes",
@@ -2147,18 +3341,18 @@ ibmcloud hpcs uko key-template-update --id ID --uko-vault UKO-VAULT --if-match I
         "expiration_date": "P1Y2M1W4D",
         "state": "active"
       },
-      "description": "IBM CLOUD key template description",
-      "created_at": "2022-03-09T15:40:52Z",
-      "updated_at": "2022-03-09T15:40:52Z",
-      "created_by": "IBMid-1308197YB4",
-      "updated_by": "IBMid-1308197YB4",
+      "description": "AWS KMS KEY TEMPLATE",
+      "created_at": "2023-06-05T14:16:07Z",
+      "updated_at": "2023-06-05T14:16:07Z",
+      "created_by": "IBMid-665000MCAR",
+      "updated_by": "IBMid-665000MCAR",
       "keystores": [
         {
-          "group": "Production",
-          "type": "ibm_cloud_kms"
+          "group": "Production-AWS-DE",
+          "type": "aws_kms"
         }
       ],
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/templates/ada4293c-07ed-4903-b3ee-419bd1a05fde"
+      "href": "v4/templates/91caa113-d3ba-4620-a252-1c27aa31fd4e"
     }
     ```
     {: screen}
@@ -2166,7 +3360,7 @@ ibmcloud hpcs uko key-template-update --id ID --uko-vault UKO-VAULT --if-match I
 #### hpcs uko keystores
 {: #command-uko-list-keystores}
 
-List all target keystores in the instance.
+List all keystores in the instance.
 
 If the `--all-pages` option is not set, the command only retrieves a single page of the collection.
 {: note}
@@ -2179,7 +3373,7 @@ ibmcloud hpcs uko keystores [--type TYPE] [--name NAME] [--description DESCRIPTI
 - Command options
 
     --type ([]string)
-    :   Optional. The type of keystores that you want to retrieve. Values that can be set are: `aws_kms`, `azure_key_vault`, `ibm_cloud_kms`, and `google_kms`.
+    :   Optional. The type of keystores that you want to retrieve. Values that can be set are: `aws_kms`, `azure_key_vault`, `ibm_cloud_kms`, `google_kms`, and `cca`.
 
     --name (string)
     :   Optional. Return only keystores whose name contains the string. The length must be between 1 and 100 characters. The value must match regular expression `/.+/`.
@@ -2208,7 +3402,7 @@ ibmcloud hpcs uko keystores [--type TYPE] [--name NAME] [--description DESCRIPTI
     --sort ([]string)
     :   Optional. The sorting order. The default value is `["-updated_at"]`. The list items must match regular expression `/^-?[a-z0-9_.\\[\\],-]+$/`.
 
-    `--all-pages` (bool)
+    --all-pages (bool)
     :   Optional. Invoke multiple requests to display all pages of the collection for keystores.
 
 - Example
@@ -2219,6 +3413,12 @@ ibmcloud hpcs uko keystores [--type TYPE] [--name NAME] [--description DESCRIPTI
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
 
@@ -2316,19 +3516,16 @@ ibmcloud hpcs uko keystores [--type TYPE] [--name NAME] [--description DESCRIPTI
 #### ibmcloud hpcs uko keystore-create
 {: #command-uko-keystore-create}
 
-Create an internal keystore or connect to an external keystore of the requested type. If the `dry_run` query parameter is used, no keystores are created in the database and only a test is performed to verify whether the connection information is correct. It is possible to sort by the following parameters: `name`, `created_at`, `updated_at`, `vault.id`.
+Create an internal keystore or connect to an external keystore of the requested type. If the `dry_run` query parameter is used, no keystores are created in the database and only a test is performed to verify whether the connection information is correct. It is possible to sort by the following parameters: `name`, `created_at`, `updated_at`, `vault-id`.
 
 ```
-ibmcloud hpcs uko keystore-create --uko-vault UKO-VAULT --keystore-body KEYSTORE-BODY [--dry-run DRY-RUN]
+ibmcloud hpcs uko keystore-create --keystore-body KEYSTORE-BODY [--dry-run DRY-RUN]
 ```
 
 - Command options
 
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
-
     --keystore-body ([KeystoreCreationRequest](#uko-keystore-creation-request-example-schema))
-    :   Required. Properties of the keystore that you want to create or connect to. 
+    :   Required. Properties of the keystore that you want to create or connect to.
 
     `--dry-run` (bool)
     :   Optional. Perform a test to verify whether a keystore created with given parameters can be communicated with successfully. No keystores are created in the database. The default value is `false`.
@@ -2337,7 +3534,6 @@ ibmcloud hpcs uko keystore-create --uko-vault UKO-VAULT --keystore-body KEYSTORE
 
     ```
     ibmcloud hpcs uko keystore-create \
-        --uko-vault=75d0f626-44b0-4076-80cd-8cb9e485fe73 \
         --keystore-body='{"type": "aws_kms", "vault": {"id": "75d0f626-44b0-4076-80cd-8cb9e485fe73"}, "name": "AWS KMS Keystore", "description": "AWS KMS Keystore", "groups": ["Production", "Production-DE"], "aws_access_key_id": "HSNGYJMKHGFFF", "aws_secret_access_key": "JHGSY766YUG67GFV", "aws_region": "eu_central_1"}' \
         --output json
     ```
@@ -2345,11 +3541,17 @@ ibmcloud hpcs uko keystore-create --uko-vault UKO-VAULT --keystore-body KEYSTORE
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | Location | String | Path to newly created resource, relative to context root. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-20T14:52:18Z
     {
       "vault": {
         "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
@@ -2384,7 +3586,7 @@ ibmcloud hpcs uko keystore-create --uko-vault UKO-VAULT --keystore-body KEYSTORE
 Delete an internal keystore or remove a connection to an external keystore. The external keystore on the remote platform still exists after you remove the connection.
 
 ```
-ibmcloud hpcs uko keystore-delete --id ID --uko-vault UKO-VAULT --if-match IF-MATCH
+ibmcloud hpcs uko keystore-delete --id ID --if-match IF-MATCH [--mode MODE]
 ```
 
 - Command options
@@ -2392,23 +3594,28 @@ ibmcloud hpcs uko keystore-delete --id ID --uko-vault UKO-VAULT --if-match IF-MA
     --id (string)
     :   Required. The UUID of the keystore. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
 
-    --uko-vault (string)
-    :   Required.  The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
-
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko keystore` command to retrieve the ETag.
+
+    --mode (string)
+    :   Optional. Mode of disconnecting from keystore. The values can be set are `restrict`, `disconnect`, `deactivate`, and `destroy`. The default value is `restrict`.
 
 - Example
 
     ```
     ibmcloud hpcs uko keystore-delete \
         --id=0325e05e-2b25-4f13-85b2-2d7f85e54359 \
-        --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
         --if-match=2022-05-11T14:58:26Z
     ```
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
     ```
@@ -2422,7 +3629,7 @@ ibmcloud hpcs uko keystore-delete --id ID --uko-vault UKO-VAULT --if-match IF-MA
 Retrieve a target internal keystore or external keystore connection and its details by specifying the ID.
 
 ```
-ibmcloud hpcs uko keystore --id ID --uko-vault UKO-VAULT
+ibmcloud hpcs uko keystore --id ID
 ```
 
 - Command options
@@ -2430,26 +3637,27 @@ ibmcloud hpcs uko keystore --id ID --uko-vault UKO-VAULT
     --id (string)
     :   Required. The UUID of the keystore. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
 
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
-
 - Example
 
     ```
     ibmcloud hpcs uko keystore \
         --id=0325e05e-2b25-4f13-85b2-2d7f85e54359 \
-        --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
         --output json
     ```
     {: pre}
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-20T14:59:03Z
     {
       "vault": {
         "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
@@ -2484,16 +3692,13 @@ ibmcloud hpcs uko keystore --id ID --uko-vault UKO-VAULT
 Update attributes of an internal keystore or an external keystore connection.
 
 ```
-ibmcloud hpcs uko keystore-update --id ID --uko-vault UKO-VAULT --if-match IF-MATCH --keystore-body KEYSTORE-BODY
+ibmcloud hpcs uko keystore-update --id ID --if-match IF-MATCH --keystore-body KEYSTORE-BODY
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the keystore. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
 
     --if-match (string)
     :   Required. The precondition of the update, which is the value of the ETag from the header on a GET request. You can use the `ibmcloud hpcs uko keystore` command to retrieve the ETag.
@@ -2506,7 +3711,6 @@ ibmcloud hpcs uko keystore-update --id ID --uko-vault UKO-VAULT --if-match IF-MA
     ```
     ibmcloud hpcs uko keystore-update \
         --id=0325e05e-2b25-4f13-85b2-2d7f85e54359 \
-        --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
         --if-match=2022-05-11T14:58:26Z \
         --keystore-body='{"description": "Updated description", "keystore_type": "aws_kms"}' \
         --output json
@@ -2515,11 +3719,16 @@ ibmcloud hpcs uko keystore-update --id ID --uko-vault UKO-VAULT --if-match IF-MA
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+    
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-20T14:59:03Z
     {
       "vault": {
         "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
@@ -2557,16 +3766,13 @@ If the `--all-pages` option is not set, the command only retrieves a single page
 {: note}
 
 ```
-ibmcloud hpcs uko associated-resources-for-target-keystore --id ID --uko-vault UKO-VAULT [--limit LIMIT] [--offset OFFSET] [--sort SORT]
+ibmcloud hpcs uko associated-resources-for-target-keystore --id ID [--limit LIMIT] [--offset OFFSET] [--sort SORT]
 ```
 
 - Command options
 
     --id (string)
     :   Required. The UUID of the keystore. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the vault UUID.
 
     --limit (int64)
     :   Optional. The number of resources to retrieve. The value must be between 1 and 1000.
@@ -2578,19 +3784,24 @@ ibmcloud hpcs uko associated-resources-for-target-keystore --id ID --uko-vault U
     :   Optional. The sorting order. The default value is `["name"]`. The list items must match the regular expression `/^-?[a-z0-9_.\\[\\],-]+$/`.
 
     --all-pages (bool)
-    :   Optional. Invoke multiple requests to display all pages of the collection for the associated resources for the target keystore.
+    :   Optional. Invoke multiple requests to display all pages of the collection for the associated resources for the keystore.
 
 - Example
 
     ```
     ibmcloud hpcs uko associated-resources-for-target-keystore \
     --id=93777bca-baef-4070-b9b5-a2e6079df1b4 \
-    --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
     --output json
     ```
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
 
@@ -2650,7 +3861,7 @@ ibmcloud hpcs uko associated-resources-for-target-keystore --id ID --uko-vault U
 Retrieve the status of a target internal or external keystore.
 
 ```
-ibmcloud hpcs uko keystore-status --id ID --uko-vault UKO-VAULT
+ibmcloud hpcs uko keystore-status --id ID
 ```
 
 - Command options
@@ -2658,20 +3869,22 @@ ibmcloud hpcs uko keystore-status --id ID --uko-vault UKO-VAULT
     --id (string)
     :   Required. The UUID of the keystore. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
 
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
-
 - Example
 
     ```
     ibmcloud hpcs uko keystore-status \
         --id=0325e05e-2b25-4f13-85b2-2d7f85e54359 \
-        --uko-vault=5295ad47-2ce9-43c3-b9e7-e5a9482c362b \
         --output json
     ```
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
 
@@ -2684,274 +3897,6 @@ ibmcloud hpcs uko keystore-status --id ID --uko-vault UKO-VAULT
     ```
     {: screen}
 
-#### hpcs uko managed-keys-from-keystore
-{: #command-uko-managed-keys-from-keystore}
-
-List all managed keys that are activated in the target keystore.
-
-If the `--all-pages` option is not set, the command only retrieves a single page of the collection.
-{: note}
-
-```
-ibmcloud hpcs uko managed-keys-from-keystore --uko-vault UKO-VAULT --id ID [--algorithm ALGORITHM] [--state STATE] [--limit LIMIT] [--offset OFFSET] [--sort SORT] [--label LABEL] [--activation-date ACTIVATION-DATE] [--activation-date-min ACTIVATION-DATE-MIN] [--activation-date-max ACTIVATION-DATE-MAX] [--deactivation-date DEACTIVATION-DATE] [--deactivation-date-min DEACTIVATION-DATE-MIN] [--deactivation-date-max DEACTIVATION-DATE-MAX] [--expiration-date EXPIRATION-DATE] [--expiration-date-min EXPIRATION-DATE-MIN] [--expiration-date-max EXPIRATION-DATE-MAX] [--created-at CREATED-AT] [--created-at-min CREATED-AT-MIN] [--created-at-max CREATED-AT-MAX] [--updated-at UPDATED-AT] [--updated-at-min UPDATED-AT-MIN] [--updated-at-max UPDATED-AT-MAX] [--size SIZE] [--size-min SIZE-MIN] [--size-max SIZE-MAX]
-```
-
-- Command options
-
-    --uko-vault (string)
-    :   Required. The UUID of the vault where the update is to take place. You can use the `ibmcloud hpcs uko vaults` command to retrieve the UUID.
-
-    --id (string)
-    :   Required. The UUID of the keystore. You can use the `ibmcloud hpcs uko keystores` command to retrieve the UUID.
-
-    --algorithm (string)
-    :   Optional. The algorithm of the returned keys. Values that can be set are `aes`, `rsa`, `hmac`, and `ec`.
-
-    --state (string)
-    :   Optional. The state that returned keys are to be in. The default value is `["pre_activation","active"]`. Values that can be set are: `pre_activation`, `active`, `deactivated`, `destroyed`.
-
-    --limit (int64)
-    :   Optional. The number of keys to retrieve. The value must be between 1 and 1000.
-
-    --offset (int64)
-    :   Optional. The number of keys to skip. The minimum value is `0`.
-
-    --sort ([]string)
-    :   Optional. The sorting order. The default value is `["-updated_at"]`. The list items must match regular expression `/^-?[a-z0-9_.\\[\\],-]+$/`.
-
-    --label (string)
-    :   Optional. The label of the key. The value must match regular expression `/.+/`.
-
-    --activation-date (string)
-    :   Optional. Return only managed keys whose activation date matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --activation-date-min (string)
-    :   Optional. Return only managed keys whose activation date is at or after the parameter value. This query parameter cannot be used in conjunction with the `activation_date` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --activation-date-max (string)
-    :   Optional. Return only managed keys whose activation date is at or before the parameter value. This query parameter cannot be used in conjunction with the `activation_date` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --deactivation-date (string)
-    :   Optional. Return only managed keys whose deactivation date matches the parameter. This query parameter cannot be used in conjunction with the `expiration_date` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --deactivation-date-min (string)
-    :   Optional. Return only managed keys whose deactivation date is at or after the parameter value. This query parameter cannot be used in conjunction with the `deactivation_date`, `expiration_date`, `expiration_date_min`, and `expiration_date_max` query parameters. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --deactivation-date-max (string)
-    :   Optional. Return only managed keys whose deactivation date is at or before the parameter value. This query parameter cannot be used in conjunction with the `deactivation_date`, `expiration_date`, `expiration_date_min`, and `expiration_date_max` query parameters. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --expiration-date (string)
-    :   Optional. Return only managed keys whose deactivation date matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --expiration-date-min (string)
-    :   Optional. Return only managed keys whose deactivation date is at or after the parameter value. This query parameter cannot be used in conjunction with the `deactivation_date`, `expiration_date`, `deactivation_date_min`, and `deactivation_date_max` query parameters. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --expiration-date-max (string)
-    :   Optional. Return only managed keys whose deactivation date is at or before the parameter value. This query parameter cannot be used in conjunction with the `deactivation_date`, `expiration_date`, `deactivation_date_min`, and `deactivation_date_max` query parameters. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --created-at (string)
-    :   Optional. Return only managed keys whose creation time matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --created-at-min (string)
-    :   Optional. Return only managed keys whose creation time is at or after the parameter value. This query parameter cannot be used in conjunction with the `created_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --created-at-max (string)
-    :   Optional. Return only managed keys whose creation time is at or before the parameter value. This query parameter cannot be used in conjunction with the `created_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --updated-at (string)
-    :   Optional. Return only managed keys whose update time matches the parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --updated-at-min (string)
-    :   Optional. Return only managed keys whose update time is after the parameter value. This query parameter cannot be used in conjunction with the `updated_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --updated-at-max (string)
-    :   Optional. Return only managed keys whose update time is before the parameter value. This query parameter cannot be used in conjunction with the `updated_at` query parameter. The value must match regular expression `/[0-9]{4}-[0-9]{2}-[0-9]{2}/`.
-
-    --size (int64)
-    :   Optional. The size of the key.
-
-    --size-min (int64)
-    :   Optional. The minimum size of the key. This query parameter cannot be used in conjunction with the `size` query parameter.
-
-    --size-max (int64)
-    :   Optional. The maximum size of the key. This query parameter cannot be used in conjunction with the `size` query parameter.
-
-    --all-pages (bool)
-    :   Optional. Invoke multiple requests to display all pages of the collection for managed keys.
-
-- Example
-
-    ```
-    ibmcloud hpcs uko managed-keys-from-keystore \
-      --uko-vault=eb66ebbd-7230-4cde-89bf-17282cda5faa \
-      --id=f779c44d-b90e-4917-b8b0-28d4591fefda \
-      --output json
-    ```
-    {: pre}
-
-- Output
-
-    The command returns the output similar to the following example:
-
-    ```
-    {
-      "total_count": 3,
-      "limit": 20,
-      "offset": 0,
-      "first": {
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys?vault.id=5295ad47-2ce9-43c3-b9e7-e5a9482c362b&limit=20&offset=0"
-      },
-      "last": {
-        "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys?vault.id=5295ad47-2ce9-43c3-b9e7-e5a9482c362b&limit=20&offset=0"
-      },
-      "managed_keys": [
-        {
-          "id": "8cacc6c9-a4ac-43b7-88c0-cf94765f4bf9",
-          "vault": {
-            "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-            "name": "Test Vault Name",
-            "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
-          },
-          "template": {
-            "id": "4411f1ae-62cc-484e-9910-65d2e8f258bb",
-            "name": "Azure-Example"
-          },
-          "description": "Azure key description",
-          "label": "AZURE-EXAMPLE-KEY",
-          "state": "active",
-          "size": "2048",
-          "algorithm": "rsa",
-          "verification_patterns": [
-            {
-              "method": "PUB-HASH-SHA-1",
-              "value": "9EBB4E22E6926F1F6B39EF5126B0F603D821D4D0"
-            }
-          ],
-          "activation_date": "2027-04-18",
-          "expiration_date": "2028-06-29",
-          "tags": [
-            {
-              "name": "first-tag",
-              "value": "in-Azure"
-            }
-          ],
-          "created_at": "2022-03-09T11:37:24Z",
-          "updated_at": "2022-03-09T11:37:27Z",
-          "created_by": "IBMid-1308197YB4",
-          "updated_by": "IBMid-1308197YB4",
-          "referenced_keystores": [],
-          "instances": [
-            {
-              "id": "3235c1b2-c62b-46e8-a5ce-acd7a8b2c52e",
-              "label_in_keystore": "AZURE-EXAMPLE-KEY",
-              "keystore": {
-                "group": "Production",
-                "type": "azure_key_vault"
-              }
-            }
-          ],
-          "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/8cacc6c9-a4ac-43b7-88c0-cf94765f4bf9"
-        },
-        {
-          "id": "3dab42dc-6941-4841-8d27-4dabcc5aa09e",
-          "vault": {
-            "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-            "name": "Test Vault Name",
-            "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
-          },
-          "template": {
-            "id": "93777bca-baef-4070-b9b5-a2e6079df1b4",
-            "name": "IBM-CLOUD-EXAMPLE-TEMPLATE"
-          },
-          "description": "IBM CLOUD key template description",
-          "label": "IBM CLOUD KEY",
-          "state": "active",
-          "size": "256",
-          "algorithm": "aes",
-          "verification_patterns": [
-            {
-              "method": "enc-zer",
-              "value": "DDFA4A"
-            }
-          ],
-          "activation_date": "2027-04-18",
-          "expiration_date": "2028-06-29",
-          "tags": [
-            {
-              "name": "first-tag",
-              "value": "for-ibm"
-            }
-          ],
-          "created_at": "2022-03-09T11:26:01Z",
-          "updated_at": "2022-03-09T11:26:04Z",
-          "created_by": "IBMid-1308197YB4",
-          "updated_by": "IBMid-1308197YB4",
-          "referenced_keystores": [],
-          "instances": [
-            {
-              "id": "ea7b6b27-d71b-4fe9-bbfe-309c7ca713a6",
-              "label_in_keystore": "IBM CLOUD KEY",
-              "type": "secret_key",
-              "keystore": {
-                "group": "Production",
-                "type": "ibm_cloud_kms"
-              }
-            }
-          ],
-          "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/3dab42dc-6941-4841-8d27-4dabcc5aa09e"
-        },
-        {
-          "id": "c2d8d0ee-c333-414f-8e64-af47320e5a46",
-          "vault": {
-            "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
-            "name": "Test Vault Name",
-            "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
-          },
-          "template": {
-            "id": "2014f3ba-87ea-4125-aa9f-95141ede04cf",
-            "name": "AWS-KMS-TEMPLATE"
-          },
-          "description": "AWS KMS key template description",
-          "label": "AWS-KMS-KEY",
-          "state": "active",
-          "size": "256",
-          "algorithm": "aes",
-          "verification_patterns": [
-            {
-              "method": "enc-zero",
-              "value": "DDD779"
-            }
-          ],
-          "activation_date": "2027-04-18",
-          "expiration_date": "2028-06-29",
-          "tags": [
-            {
-              "name": "first-tag",
-              "value": "for-AWS-KMS"
-            }
-          ],
-          "created_at": "2022-03-09T11:55:36Z",
-          "updated_at": "2022-03-09T11:55:39Z",
-          "created_by": "IBMid-1308197YB4",
-          "updated_by": "IBMid-1308197YB4",
-          "referenced_keystores": [],
-          "instances": [
-            {
-              "id": "acf9af98-a459-4ef1-9c64-6cd987187cb5",
-              "label_in_keystore": "AWS-KMS-KEY",
-              "type": "secret_key",
-              "keystore": {
-                "group": "Production",
-                "type": "aws_kms"
-              }
-            }
-          ],
-          "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/managed_keys/c2d8d0ee-c333-414f-8e64-af47320e5a46"
-        }
-      ]
-    }
-    ```
-    {: screen}
 
 #### hpcs uko vaults
 {: #command-uko-vaults}
@@ -2993,6 +3938,12 @@ ibmcloud hpcs uko vaults [--limit LIMIT] [--offset OFFSET] [--sort SORT] [--name
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
 
@@ -3060,22 +4011,31 @@ ibmcloud hpcs uko vault-create --name NAME [--description DESCRIPTION]
     ```
     {: pre}
 
-- Output 
+- Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
 
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-20T15:27:01Z
     {
       "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
       "name": "Test Vault Name",
-      "description": "Test Vault Name description.",
+      "description": "'Test Vault Name' description.",
       "created_at": "2022-03-09T10:57:43Z",
       "updated_at": "2022-03-09T10:57:43Z",
       "created_by": "IBMid-1308197YB4",
       "updated_by": "IBMid-1308197YB4",
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+      "recovery_key_label": "TEKMF.AES.RECOVERY.00001",
+      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
+      "keys_count": 100,
+      "key_templates_count": 10,
+      "keystores_count": 0
     }
     ```
     {: screen}
@@ -3107,6 +4067,12 @@ ibmcloud hpcs uko vault-delete --id ID --if-match IF-MATCH
     {: pre}
 
 - Output
+
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
 
     The command returns the output similar to the following example:
 
@@ -3141,11 +4107,16 @@ ibmcloud hpcs uko vault --id ID
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-20T15:30:40Z
     {
       "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
       "name": "Test Vault Name",
@@ -3154,7 +4125,11 @@ ibmcloud hpcs uko vault --id ID
       "updated_at": "2022-03-09T10:57:43Z",
       "created_by": "IBMid-1308197YB4",
       "updated_by": "IBMid-1308197YB4",
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+      "recovery_key_label": "TEKMF.AES.RECOVERY.00001",
+      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
+      "keys_count": 100,
+      "key_templates_count": 10,
+      "keystores_count": 0
     }
     ```
     {: screen}
@@ -3196,11 +4171,16 @@ ibmcloud hpcs uko vault-update --id ID --if-match IF-MATCH [--name NAME] [--desc
 
 - Output
 
+    Headers:
+
+    | Name | Type | Description |
+    | ---- | ---- | ----------- |
+    | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    | ETag | String | Identifier for a specific version of the resource. |
+
     The command returns the output similar to the following example:
 
     ```
-    ETag
-    2022-05-20T15:27:01Z
     {
       "id": "5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
       "name": "Test Vault Name",
@@ -3209,7 +4189,11 @@ ibmcloud hpcs uko vault-update --id ID --if-match IF-MATCH [--name NAME] [--desc
       "updated_at": "2022-03-09T10:57:43Z",
       "created_by": "IBMid-1308197YB4",
       "updated_by": "IBMid-1308197YB4",
-      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+      "recovery_key_label": "TEKMF.AES.RECOVERY.00001",
+      "href": "https://uko.us-south.hs-crypto.cloud.ibm.com:9549/api/v4/vaults/5295ad47-2ce9-43c3-b9e7-e5a9482c362b",
+      "keys_count": 100,
+      "key_templates_count": 10,
+      "keystores_count": 0
     }
     ```
     {: screen}
@@ -3257,16 +4241,21 @@ The following example shows the format of the `KeystoreCreationRequest` object.
 
 ```json
 {
-  "type" : "aws_kms",
-  "vault" : {
-    "id" : "5295ad47-2ce9-43c3-b9e7-e5a9482c362b"
+  "name": "IBM Cloud Keystore",
+  "description": "IBM Cloud Keystore description.",
+  "groups": [
+    "Production"
+  ],
+  "ibm_api_endpoint": "https://us-south.kms.cloud.ibm.com",
+  "ibm_iam_endpoint": "https://iam.bluemix.net/identity/token",
+  "ibm_api_key": "bxgstahGH8273662-HGD8765ghsvv-hsjbv786KJHV",
+  "ibm_instance_id": "r64jshf0a4-jh87-8476-jks3-9752hgdvs",
+  "vault": {
+    "id": "75d0f626-44b0-4076-80cd-8cb9e485fe73"
   },
-  "name" : "IBM Cloud Keystore Name",
-  "description" : "Azure keystore",
-  "groups" : [ "Production" ],
-  "aws_region" : "af_south_1",
-  "aws_access_key_id" : "BSDFWERUANLKJDN54AAS",
-  "aws_secret_access_key" : "6HSz234KBjMrASFasfg5PasAFGNasg87asdgQzgs"
+  "ibm_variant": "hpcs",
+  "ibm_key_ring": "IBM-Cloud-KMS-Internal",
+  "type": "ibm_cloud_kms"
 }
 ```
 {: codeblock}
@@ -3278,12 +4267,16 @@ The following example shows the format of the `KeystoreUpdateRequest` object.
 
 ```json
 {
-  "name" : "IBM Cloud Keystore Name",
-  "description" : "Azure keystore",
-  "groups" : [ "Production" ],
-  "google_credentials" : "eyJleGFtcGxlIjogImdvb2dsZV9jbG91ZF9rbXMifQo=",
-  "google_location" : "europe-central2",
-  "google_key_ring" : "my-key-ring"
+  "name": "IBM Cloud Keystore",
+  "description": "IBM Cloud Keystore description.",
+  "groups": [
+    "Production"
+  ],
+  "ibm_api_endpoint": "https://us-south.kms.cloud.ibm.com",
+  "ibm_iam_endpoint": "https://iam.bluemix.net/identity/token",
+  "ibm_api_key": "***",
+  "ibm_instance_id": "c9e2e2d5-013a-409f-93cf-5393972263d7",
+  "ibm_key_ring": "Key-Ring-1"
 }
 ```
 {: codeblock}

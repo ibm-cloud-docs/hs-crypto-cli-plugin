@@ -1,9 +1,10 @@
 toc:
   properties:
     subcollection: hs-crypto-cli-plugin
-    audience: cli
-    href: /docs/hs-crypto-cli-plugin
+    audience: service
+    category: security
     path: hs-crypto-cli-plugin
+    href: /docs/hs-crypto-cli-plugin
     label: IBM Cloud Hyper Protect Crypto Services CLI reference
 
   entries:

@@ -17,7 +17,7 @@ subcollection: hs-crypto-cli-plugin
 {: #hpcs-cli-plugin}
 
 {{site.data.keyword.hscrypto}} provides multiple {{site.data.keyword.cloud}} CLI plug-ins for you to perform actions toward your service instances: key management CLI plug-in, Trusted Key Entry (TKE) CLI plug-in, certificate manager CLI plug-in, and {{site.data.keyword.uko_full_notm}} (UKO) CLI plug-in.
-{:shortdesc}
+{: shortdesc}
 
 ## {{site.data.keyword.hscrypto}} key management CLI plug-in
 {: #kp-cli-plugin}
@@ -163,31 +163,31 @@ ibmcloud hpcs-cert-mgr adminkey get --crn HPCS_CRN [--private]
 
 - Example
 
-  ```
-  export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
-  ```
-  {: pre}
+    ```
+    export HPCS_CRN=crn:v1:staging:public:xxx:yyy:zzz
+    ```
+    {: pre}
 
-  ```
-  ibmcloud hpcs-cert-mgr adminkey get --crn ${HPCS_CRN}
-  ```
-  {: pre}
+    ```
+    ibmcloud hpcs-cert-mgr adminkey get --crn ${HPCS_CRN}
+    ```
+    {: pre}
 
 - Output
 
   The command returns the output similar to the following example:
 
-  ```
-  connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
-  +------------+--------+
-  | PROPERTIES | VALUES |
-  +------------+--------+
-  | PublicKey  |        |
-  +------------+--------+
+    ```
+    connecting to server [cert-mgr.us-south.hs-crypto.cloud.ibm.com:443]...
+    +------------+--------+
+    | PROPERTIES | VALUES |
+    +------------+--------+
+    | PublicKey  |        |
+    +------------+--------+
 
-  command completed successfully.
-  ```
-  {: screen}
+    command completed successfully.
+    ```
+    {: screen}
 
 #### hpcs-cert-mgr adminkey set
 {: #command-cert-manager-set-admin-key}
@@ -727,6 +727,7 @@ ibmcloud hpcs uko managed-keys [--vault-id VAULT-ID] [--algorithm ALGORITHM] [--
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -1155,6 +1156,7 @@ ibmcloud hpcs uko managed-key-create --template-name TEMPLATE-NAME --vault VAULT
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | Location | String | Path to newly created resource, relative to context root. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -1283,6 +1285,7 @@ ibmcloud hpcs uko managed-key-delete --id ID --if-match IF-MATCH
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -1323,6 +1326,7 @@ ibmcloud hpcs uko managed-key --id ID
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
   
@@ -1469,6 +1473,7 @@ ibmcloud hpcs uko managed-key-update --id ID --if-match IF-MATCH [--label LABEL]
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
   
@@ -1609,6 +1614,7 @@ ibmcloud hpcs uko associated-resources-for-managed-key --id ID [--limit LIMIT] [
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -1787,6 +1793,7 @@ ibmcloud hpcs uko managed-keys-from-keystore --id ID [--algorithm ALGORITHM] [--
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -2198,6 +2205,7 @@ ibmcloud hpcs uko managed-key-ds --id ID
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -2256,6 +2264,7 @@ ibmcloud hpcs uko managed-key-update-from-template --id ID --if-match IF-MATCH [
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -2386,6 +2395,7 @@ ibmcloud hpcs uko managed-key-activate --id ID --if-match IF-MATCH
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -2516,6 +2526,7 @@ ibmcloud hpcs uko managed-key-deactivate --id ID --if-match IF-MATCH
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -2646,6 +2657,7 @@ ibmcloud hpcs uko managed-key-destroy --id ID --if-match IF-MATCH
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -2775,6 +2787,7 @@ ibmcloud hpcs uko managed-key-sync --id ID --if-match IF-MATCH
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -2886,6 +2899,7 @@ ibmcloud hpcs uko key-templates [--name NAME] [--naming-scheme NAME-SCHEME] [--v
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3110,6 +3124,7 @@ ibmcloud hpcs uko key-template-create --vault VAULT --name NAME --type TYPE --st
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | Location | String | Path to newly created resource, relative to context root. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3185,6 +3200,7 @@ ibmcloud hpcs uko key-template-delete --id ID --if-match IF-MATCH
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3225,6 +3241,7 @@ ibmcloud hpcs uko key-template --id ID
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3315,6 +3332,7 @@ ibmcloud hpcs uko key-template-update --id ID --if-match IF-MATCH [--keystores K
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3419,6 +3437,7 @@ ibmcloud hpcs uko keystores [--type TYPE] [--name NAME] [--description DESCRIPTI
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3548,6 +3567,7 @@ ibmcloud hpcs uko keystore-create --keystore-body KEYSTORE-BODY [--dry-run DRY-R
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | Location | String | Path to newly created resource, relative to context root. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3616,6 +3636,7 @@ ibmcloud hpcs uko keystore-delete --id ID --if-match IF-MATCH [--mode MODE]
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
     ```
@@ -3654,6 +3675,7 @@ ibmcloud hpcs uko keystore --id ID
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3725,6 +3747,7 @@ ibmcloud hpcs uko keystore-update --id ID --if-match IF-MATCH --keystore-body KE
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
     
     The command returns the output similar to the following example:
 
@@ -3802,6 +3825,7 @@ ibmcloud hpcs uko associated-resources-for-target-keystore --id ID [--limit LIMI
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3885,6 +3909,7 @@ ibmcloud hpcs uko keystore-status --id ID
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -3944,6 +3969,7 @@ ibmcloud hpcs uko vaults [--limit LIMIT] [--offset OFFSET] [--sort SORT] [--name
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -4019,6 +4045,7 @@ ibmcloud hpcs uko vault-create --name NAME [--description DESCRIPTION]
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -4073,6 +4100,7 @@ ibmcloud hpcs uko vault-delete --id ID --if-match IF-MATCH
     | Name | Type | Description |
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -4113,6 +4141,7 @@ ibmcloud hpcs uko vault --id ID
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
@@ -4177,6 +4206,7 @@ ibmcloud hpcs uko vault-update --id ID --if-match IF-MATCH [--name NAME] [--desc
     | ---- | ---- | ----------- |
     | X-Correlation-ID | String | A unique identifier that is attached to requests and messages that allow reference to a particular transaction or event chain. |
     | ETag | String | Identifier for a specific version of the resource. |
+    {: caption="Table. Command output headers" caption-side="bottom"}
 
     The command returns the output similar to the following example:
 
